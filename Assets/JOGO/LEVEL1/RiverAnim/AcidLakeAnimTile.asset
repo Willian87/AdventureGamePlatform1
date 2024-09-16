@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13b75c95f34a00d4e8c04f76b73312e6, type: 3}
+  m_Name: AcidLakeAnimTile
+  m_EditorClassIdentifier: 
+  m_AnimatedSprites:
+  - {fileID: 21300000, guid: ce2e894b88a0f0b41ac6d5b350dbe1d0, type: 3}
+  - {fileID: 21300000, guid: 05ecc34ba482bc94299252f954f2719a, type: 3}
+  - {fileID: 21300000, guid: 40b07290af67590428ffa6ed2b23d808, type: 3}
+  - {fileID: 21300000, guid: 6920b3e5d5efa7e4c99751cc3e42622e, type: 3}
+  - {fileID: 21300000, guid: e5c1883e8bd93564880ca749ec7e9fd1, type: 3}
+  m_MinSpeed: 3
+  m_MaxSpeed: 3
+  m_AnimationStartTime: 0
+  m_AnimationStartFrame: 0
+  m_TileColliderType: 0
