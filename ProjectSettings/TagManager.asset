@@ -17,7 +17,7 @@ TagManager:
   - Enemy
   - Platform
   - FlyingEnemies
-  - 
+  - Boss
   - 
   - 
   - 
@@ -56,6 +56,9 @@ TagManager:
     locked: 0
   - name: Goblins
     uniqueID: 2956283105
+    locked: 0
+  - name: Boss
+    uniqueID: 1873661119
     locked: 0
   - name: Player
     uniqueID: 3440640509
