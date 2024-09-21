@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13b75c95f34a00d4e8c04f76b73312e6, type: 3}
+  m_Name: WaterLake2
+  m_EditorClassIdentifier: 
+  m_AnimatedSprites:
+  - {fileID: 21300000, guid: 236243af074ef83408327c7407c803fc, type: 3}
+  - {fileID: 21300000, guid: 7b4585ad3c45aef4682d1d92879ae5ea, type: 3}
+  - {fileID: 21300000, guid: 2fd7b455f7ea52a4b81b07c852505a07, type: 3}
+  - {fileID: 21300000, guid: 6356c0ffcc6dd0e4fab15f71d53dbcd2, type: 3}
+  - {fileID: 21300000, guid: dfba1dc634ad3fe4b8ce43c1c6486f57, type: 3}
+  - {fileID: 21300000, guid: 4e974b61814962e48b901cbaa31f56cc, type: 3}
+  - {fileID: 21300000, guid: c7d71d295f167784a853b2f91f668cdb, type: 3}
+  - {fileID: 21300000, guid: 6ee26cbe26f44f04a8be8fd00309345a, type: 3}
+  m_MinSpeed: 4
+  m_MaxSpeed: 4
+  m_AnimationStartTime: 0
+  m_AnimationStartFrame: 0
+  m_TileColliderType: 0

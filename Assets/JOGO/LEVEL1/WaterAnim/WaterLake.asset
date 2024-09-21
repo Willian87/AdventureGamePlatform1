@@ -12,9 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13b75c95f34a00d4e8c04f76b73312e6, type: 3}
   m_Name: WaterLake
   m_EditorClassIdentifier: 
-  m_AnimatedSprites: []
-  m_MinSpeed: 1
-  m_MaxSpeed: 1
+  m_AnimatedSprites:
+  - {fileID: 21300000, guid: 499286caade670645a66ef5cd04dfd49, type: 3}
+  - {fileID: 21300000, guid: 58611c0fa77968547a270bf2a3a90da1, type: 3}
+  - {fileID: 21300000, guid: 31b59e1f551d3d340a056cea1b8f6f12, type: 3}
+  - {fileID: 21300000, guid: d340acbe71b78344eb2fae0ce180d086, type: 3}
+  - {fileID: 21300000, guid: 7ae8f2c4082c40341b478aefb6921a29, type: 3}
+  - {fileID: 21300000, guid: 184e1322f8a619f4b8b9d3cbffb35d6c, type: 3}
+  - {fileID: 21300000, guid: d7363e6a08c5ffd438f5da98457733eb, type: 3}
+  - {fileID: 21300000, guid: c8f59c8f17f77c6479f6ced4cd3f634f, type: 3}
+  m_MinSpeed: 2
+  m_MaxSpeed: 2
   m_AnimationStartTime: 0
   m_AnimationStartFrame: 0
   m_TileColliderType: 0
