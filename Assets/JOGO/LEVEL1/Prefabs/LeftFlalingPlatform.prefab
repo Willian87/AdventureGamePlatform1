@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4642026255405916295}
   - component: {fileID: 4140505062298415588}
   - component: {fileID: 3145575802495061229}
+  - component: {fileID: 4326540982390939045}
   - component: {fileID: 5191611237283207645}
   m_Layer: 3
   m_Name: LeftFlalingPlatform
@@ -113,7 +114,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 5
 --- !u!61 &3145575802495061229
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -144,7 +145,7 @@ BoxCollider2D:
     serializedVersion: 2
     m_Bits: 4294967295
   m_IsTrigger: 0
-  m_UsedByEffector: 0
+  m_UsedByEffector: 1
   m_UsedByComposite: 0
   m_Offset: {x: -0.090538085, y: -0.012426794}
   m_SpriteTilingProperty:
@@ -159,6 +160,25 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.45892382, y: 0.13227642}
   m_EdgeRadius: 0
+--- !u!251 &4326540982390939045
+PlatformEffector2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6292696200084084605}
+  m_Enabled: 1
+  m_UseColliderMask: 1
+  m_ColliderMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RotationalOffset: 0
+  m_UseOneWay: 1
+  m_UseOneWayGrouping: 0
+  m_SurfaceArc: 180
+  m_UseSideFriction: 0
+  m_UseSideBounce: 0
+  m_SideArc: 1
 --- !u!114 &5191611237283207645
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -172,5 +192,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fallDelay: 1
-  destroyDelay: 5
+  respawnDelay: 2
   rb: {fileID: 4140505062298415588}
