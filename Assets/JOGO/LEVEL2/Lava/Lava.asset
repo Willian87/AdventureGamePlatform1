@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 13b75c95f34a00d4e8c04f76b73312e6, type: 3}
-  m_Name: water
+  m_Name: Lava
   m_EditorClassIdentifier: 
   m_AnimatedSprites:
-  - {fileID: 21300000, guid: d371dcf1872d01448aa8e295762c918d, type: 3}
-  - {fileID: 21300000, guid: 6ee26cbe26f44f04a8be8fd00309345a, type: 3}
+  - {fileID: 21300000, guid: 51081d2c3098b044c8a44a2d713726eb, type: 3}
+  - {fileID: 21300000, guid: 2e51d451b209354479d63096fab02bd1, type: 3}
   m_MinSpeed: 3
   m_MaxSpeed: 3
   m_AnimationStartTime: 0
