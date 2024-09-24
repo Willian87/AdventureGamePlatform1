@@ -5,7 +5,7 @@ public class FallingPlatform : MonoBehaviour
 {
     [Header("Falling Platform Settings")]
     [SerializeField] private float fallDelay = 2f;    // Delay before the platform falls
-    [SerializeField] private float destroyDelay = 5f; // Time after falling when the platform is disabled or destroyed
+    [SerializeField] private float respawnDelay = 5f; // Time after falling when the platform is disabled or destroyed
     [SerializeField] private Rigidbody2D rb;          // Reference to the Rigidbody2D component
 
     private Vector3 initialPosition;   // The initial position of the platform
@@ -69,7 +69,7 @@ public class FallingPlatform : MonoBehaviour
     private IEnumerator ResetAfterDelay()
     {
         // Delay the reset to prevent conflicts with deactivation/activation
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(respawnDelay);
 
         // Reset the platform's position to its initial position
         transform.position = initialPosition;
@@ -87,7 +87,7 @@ public class FallingPlatform : MonoBehaviour
         // Reset flags
         isFalling = false;
         isResetting = false;
-        hasPlayerStepped = false;  // Reset the player step flag
+        
     }
 
     private void OnDrawGizmosSelected()
