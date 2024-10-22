@@ -22,13 +22,15 @@ public class EnemyPatrol : MonoBehaviour
     [Header("Attack Settings")]
     [SerializeField] private float attackRange = 1f;          // Range to stop and attack the player
     [SerializeField] private float chaseSpeed = 3.5f;         // Speed when chasing the player
-    
+
     private Transform player;
     private bool isChasingPlayer = false;
     private bool isWalking = false;
     private Rigidbody2D rb;
     private Animator animator;
     private SpriteRenderer spriteRenderer;
+
+    bool isFacingRight = true;
 
     private void Start()
     {
@@ -149,64 +151,33 @@ public class EnemyPatrol : MonoBehaviour
         Vector2 newPosition = Vector2.MoveTowards(rb.position, targetPosition, speed * Time.deltaTime);
         rb.MovePosition(newPosition);
 
-        // Flip the enemy based on the direction
+        //if (targetPosition.x > transform.position.x) // Moving to the right
+        //{
+        //    transform.rotation = Quaternion.Euler(0, 0, 0); // Face right (no Y rotation)
+
+        //}
+        //else if (targetPosition.x < transform.position.x) // Moving to the left
+        //{
+        //    transform.rotation = Quaternion.Euler(0, 180, 0); // Rotate 180 degrees to face left
+        //}
+
+        //Flip the enemy based on the direction
         if (targetPosition.x > transform.position.x)
         {
+
             spriteRenderer.flipX = true; // Face right
             targetPosition = Vector2.right;
         }
         else if (targetPosition.x < transform.position.x)
         {
+
             spriteRenderer.flipX = false; // Face left
             targetPosition = Vector2.left;
 
         }
     }
 
-    
+
 }
 
 
-
-//using System.Collections;
-//using System.Collections.Generic;
-//using UnityEngine;
-
-//public class EnemyPatrol : MonoBehaviour
-//{
-//    [SerializeField] Transform[] patrolPoint;
-//    [SerializeField] float patrolSpeed = 0.5f;
-//    [SerializeField] int patrolDestination;
-//    Animator anim;
-
-//    private void Start()
-//    {
-//        anim = GetComponent<Animator>();
-//    }
-//    // Update is called once per frame
-//    void Update()
-//    {
-//        if(patrolDestination == 0)
-//        {
-//            transform.position = Vector2.MoveTowards(transform.position, patrolPoint[0].position, patrolSpeed * Time.deltaTime);
-//            if (Vector2.Distance(transform.position, patrolPoint[0].position) < .2f)
-//            {
-//                anim.SetBool("isWalking", true);
-//                transform.localScale = new Vector3(1, 1, 1);
-//                patrolDestination = 1;
-
-//            }
-//        }
-
-//        if (patrolDestination == 1)
-//        {
-//            transform.position = Vector2.MoveTowards(transform.position, patrolPoint[1].position, patrolSpeed * Time.deltaTime);
-//            if (Vector2.Distance(transform.position, patrolPoint[1].position) < .2f)
-//            {
-//                anim.SetBool("isWalking", true);
-//                transform.localScale = new Vector3(-1, 1, 1);
-//                patrolDestination = 0;
-//            }
-//        }
-//    }
-//}
