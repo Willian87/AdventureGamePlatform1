@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 2359327489009812805}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.076, y: -0.093, z: 0}
+  m_LocalPosition: {x: 0.394, y: -0.093, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -42,13 +42,12 @@ GameObject:
   - component: {fileID: 7251519309392568022}
   - component: {fileID: 1619257298346443180}
   - component: {fileID: 8333772601578696394}
-  - component: {fileID: 3701111045688160325}
   - component: {fileID: 5727582437312794554}
   - component: {fileID: 2424306610382935085}
   - component: {fileID: 3386191115809048283}
   - component: {fileID: 50222173815349258}
   - component: {fileID: 5866547690668849634}
-  - component: {fileID: 5472913879065708457}
+  - component: {fileID: 5689622588721034457}
   m_Layer: 8
   m_Name: Snake
   m_TagString: Untagged
@@ -145,86 +144,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!68 &3701111045688160325
-EdgeCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4539028070614786501}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_EdgeRadius: 0
-  m_Points:
-  - {x: -0.027474642, y: -0.18061876}
-  - {x: -0.046405792, y: -0.21032906}
-  - {x: -0.06094742, y: -0.20978403}
-  - {x: -0.24489975, y: -0.11294794}
-  - {x: -0.3501625, y: -0.11146641}
-  - {x: -0.3941307, y: -0.12541771}
-  - {x: -0.51784134, y: -0.23398447}
-  - {x: -0.55173874, y: -0.23174381}
-  - {x: -0.6029854, y: -0.19912863}
-  - {x: -0.63035583, y: -0.15051079}
-  - {x: -0.6312027, y: -0.1269126}
-  - {x: -0.5843353, y: -0.1251812}
-  - {x: -0.5667801, y: 0.021831512}
-  - {x: -0.7155113, y: 0.02575779}
-  - {x: -0.74786377, y: -0.09076738}
-  - {x: -0.6950989, y: -0.08352327}
-  - {x: -0.69521713, y: -0.1323986}
-  - {x: -0.6939354, y: -0.22747421}
-  - {x: -0.57492065, y: -0.32860804}
-  - {x: -0.4769516, y: -0.32836294}
-  - {x: -0.35559845, y: -0.22498608}
-  - {x: -0.27070618, y: -0.22769165}
-  - {x: -0.05306244, y: -0.33564377}
-  - {x: 0.052497864, y: -0.3328457}
-  - {x: 0.10991669, y: -0.24956799}
-  - {x: 0.10913849, y: -0.15586233}
-  - {x: -0.0062026978, y: 0.13316727}
-  - {x: 0.020885468, y: 0.15565252}
-  - {x: 0.07842636, y: 0.11669731}
-  - {x: 0.14069748, y: 0.11064911}
-  - {x: 0.1520729, y: 0.124611855}
-  - {x: 0.14996338, y: 0.1774373}
-  - {x: 0.058597565, y: 0.29175568}
-  - {x: 0.020565033, y: 0.3109827}
-  - {x: -0.07254791, y: 0.31200933}
-  - {x: -0.22485352, y: 0.19712162}
-  - {x: -0.22417068, y: 0.06902504}
-  - {x: -0.039527893, y: -0.10948944}
-  - {x: -0.039405823, y: -0.13278341}
-  - {x: -0.027851105, y: -0.14066744}
-  - {x: -0.028647184, y: -0.17981815}
-  m_AdjacentStartPoint: {x: 0, y: 0}
-  m_AdjacentEndPoint: {x: 0, y: 0}
-  m_UseAdjacentStartPoint: 0
-  m_UseAdjacentEndPoint: 0
 --- !u!50 &5727582437312794554
 Rigidbody2D:
   serializedVersion: 4
@@ -327,10 +246,10 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.27604103, y: -0.32336235}
+  m_Offset: {x: 0.041503906, y: -0.32336235}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0.37115127, y: 0.5016734}
     oldSize: {x: 2.56, y: 2.56}
     newSize: {x: 2.56, y: 2.56}
     adaptiveTilingThreshold: 0.5
@@ -338,7 +257,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.68291855, y: 0.036197662}
+  m_Size: {x: 0.7863083, y: 0.036197662}
   m_EdgeRadius: 0
 --- !u!114 &50222173815349258
 MonoBehaviour:
@@ -353,7 +272,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackPoint: {fileID: 939606170932412882}
-  attackRange: 0.72
+  attackRange: -1
   playerLayerMask:
     serializedVersion: 2
     m_Bits: 64
@@ -377,7 +296,7 @@ MonoBehaviour:
   maxHealth: 100
   currentHealth: 0
   enemyOut: 2
---- !u!114 &5472913879065708457
+--- !u!114 &5689622588721034457
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -389,9 +308,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 278264ec53bbd2b4aae56ba8f551ba52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  patrolPoints:
-  - {fileID: 0}
-  - {fileID: 0}
+  patrolPoints: []
   patrolSpeed: 2
   chaseLimitPointA: {fileID: 0}
   chaseLimitPointB: {fileID: 0}
