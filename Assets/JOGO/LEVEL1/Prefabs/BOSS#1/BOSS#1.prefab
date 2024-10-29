@@ -11,9 +11,11 @@ GameObject:
   - component: {fileID: 507199877982740020}
   - component: {fileID: 507199877982740021}
   - component: {fileID: 507199877982740022}
-  - component: {fileID: 3662564979981808343}
   - component: {fileID: 759901887987049106}
   - component: {fileID: 6083574472770831180}
+  - component: {fileID: 8147701721578318087}
+  - component: {fileID: 4338232544600586683}
+  - component: {fileID: 6439906339531010978}
   m_Layer: 11
   m_Name: BOSS#1
   m_TagString: Untagged
@@ -109,31 +111,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &3662564979981808343
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 507199877982740023}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fbf043ff536747d4a8a9f64ca2732b5a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  walkSpeed: 2
-  runSpeed: 4
-  patrolPoints: []
-  stompDelay: 1
-  attackCooldown: 2
-  attackRange: 2
-  playerLayerMask:
-    serializedVersion: 2
-    m_Bits: 64
-  baseDamage: 10
-  magicFireDamage: 15
-  lightningDamage: 20
-  magicBladeDamage: 25
 --- !u!61 &759901887987049106
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -169,7 +146,7 @@ BoxCollider2D:
   m_Offset: {x: 0.0110321045, y: -0.26477194}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0.93, w: 0.45}
-    pivot: {x: 0.30589023, y: 0.51673365}
+    pivot: {x: 0.30254352, y: 0.52677387}
     oldSize: {x: 2.56, y: 2.56}
     newSize: {x: 2.56, y: 2.56}
     adaptiveTilingThreshold: 0.5
@@ -206,3 +183,62 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &8147701721578318087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 507199877982740023}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21ada9ed4638dda4fba59607415ecd6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackPoint: {fileID: 0}
+  attackRange: 0
+  playerLayerMask:
+    serializedVersion: 2
+    m_Bits: 64
+  player: {fileID: 0}
+  attackCooldown: 2
+  baseDamage: 5
+  criticalDamage: 20
+  criticalChance: 0.2
+--- !u!114 &4338232544600586683
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 507199877982740023}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b6ebea9f6404e8488c8138416ad540d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  currentHealth: 0
+  enemyOut: 2
+--- !u!114 &6439906339531010978
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 507199877982740023}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 278264ec53bbd2b4aae56ba8f551ba52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  patrolPoints: []
+  patrolSpeed: 2
+  chaseLimitPointA: {fileID: 0}
+  chaseLimitPointB: {fileID: 0}
+  detectionRange: 1.5
+  playerLayerMask:
+    serializedVersion: 2
+    m_Bits: 64
+  attackRange: 1
+  chaseSpeed: 3.5
