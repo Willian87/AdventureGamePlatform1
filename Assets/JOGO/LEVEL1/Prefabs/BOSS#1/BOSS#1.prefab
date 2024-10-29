@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 507199877982740022}
   - component: {fileID: 759901887987049106}
   - component: {fileID: 6083574472770831180}
-  - component: {fileID: 8147701721578318087}
-  - component: {fileID: 4338232544600586683}
-  - component: {fileID: 6439906339531010978}
+  - component: {fileID: 5320578469278829870}
+  - component: {fileID: 2338778779787973393}
+  - component: {fileID: 9150497480889018485}
   m_Layer: 11
   m_Name: BOSS#1
   m_TagString: Untagged
@@ -183,7 +183,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &8147701721578318087
+--- !u!114 &5320578469278829870
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -192,11 +192,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 507199877982740023}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 21ada9ed4638dda4fba59607415ecd6b, type: 3}
+  m_Script: {fileID: 11500000, guid: fbf043ff536747d4a8a9f64ca2732b5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   attackPoint: {fileID: 0}
-  attackRange: 0
+  attackRange: -0.16
   playerLayerMask:
     serializedVersion: 2
     m_Bits: 64
@@ -205,7 +205,7 @@ MonoBehaviour:
   baseDamage: 5
   criticalDamage: 20
   criticalChance: 0.2
---- !u!114 &4338232544600586683
+--- !u!114 &2338778779787973393
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -214,13 +214,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 507199877982740023}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b6ebea9f6404e8488c8138416ad540d, type: 3}
+  m_Script: {fileID: 11500000, guid: 5d24cae79b60e3c45a9ec8dc28086fe1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
   currentHealth: 0
   enemyOut: 2
---- !u!114 &6439906339531010978
+--- !u!114 &9150497480889018485
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -229,7 +229,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 507199877982740023}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 278264ec53bbd2b4aae56ba8f551ba52, type: 3}
+  m_Script: {fileID: 11500000, guid: 00801fffbc75305478dc1d31c730fb81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   patrolPoints: []
@@ -240,5 +240,5 @@ MonoBehaviour:
   playerLayerMask:
     serializedVersion: 2
     m_Bits: 64
-  attackRange: 1
+  attackRange: 0.58
   chaseSpeed: 3.5

@@ -1,148 +1,99 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Boss : MonoBehaviour
 {
-    public float maxHealth = 100f;
-    private float currentHealth;
-    public float detectionRange = 5f;
-    public float attackRange = 1.5f;
-    public Transform player;
-    public Animator animator;
-    public GameObject healthBarUI;
+    Animator anim;
+    AudioSource audioSource;
 
-    private enum State { Idle, Patrolling, Chasing, Stomping, Attacking, Hurt, Dead }
-    private State currentState;
+    public Transform attackPoint;
+    
+    [SerializeField] private LayerMask playerLayerMask;
 
-    private void Start()
+    [SerializeField] private PlayerCombat player;
+
+    [Header("Advanced Settings")]
+    [SerializeField] private float attackCooldown = 2f;
+    private bool canAttack = true;
+    [SerializeField] private float attackRange;
+    [SerializeField] private int baseDamage = 5;
+    [SerializeField] private int criticalDamage = 20;
+    [SerializeField] private float criticalChance = 0.2f;
+
+    public delegate void EnemyEvent();
+    public static event EnemyEvent OnEnemyAttack;
+    private float nextAttackTime;
+
+    private SpriteRenderer spriteRenderer;
+
+    void Start()
     {
-        currentHealth = maxHealth;
-        currentState = State.Idle;
-        healthBarUI.SetActive(false);
+        anim = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
+        player = FindObjectOfType<PlayerCombat>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
-    private void Update()
+    void Update()
     {
-        switch (currentState)
+        nextAttackTime += Time.deltaTime;
+        if (nextAttackTime >= 2)
         {
-            case State.Idle:
-                Idle();
-                if (IsPlayerInRange())
-                {
-                    currentState = State.Chasing;
-                }
-                break;
-            case State.Patrolling:
-                Patrol();
-                if (IsPlayerInRange())
-                {
-                    currentState = State.Chasing;
-                }
-                break;
-            case State.Chasing:
-                ChasePlayer();
-                if (IsPlayerInAttackRange())
-                {
-                    currentState = State.Stomping;
-                }
-                break;
-            case State.Stomping:
-                Stomp();
-                break;
-            case State.Attacking:
-                ExecuteAttack();
-                break;
-            case State.Hurt:
-                HandleHurt();
-                break;
-            case State.Dead:
-                HandleDeath();
-                break;
+            EAttack();
+            nextAttackTime = 0f;
         }
     }
 
-    private void Idle()
+    public void EAttack()
     {
-        // Play Idle animation
-        animator.SetBool("isWalking", false);
-        animator.SetBool("isRunning", false);
-    }
+        Vector2 direction = spriteRenderer.flipX ? Vector2.left : Vector2.right;
+        RaycastHit2D attackRangeRayCast = Physics2D.Raycast(attackPoint.position, direction, attackRange, playerLayerMask);
 
-    private void Patrol()
-    {
-        // Implement patrol logic here
-    }
-
-    private void ChasePlayer()
-    {
-        animator.SetBool("isWalking", false);
-        animator.SetBool("isRunning", true);
-        // Logic to chase the player
-        transform.position = Vector2.MoveTowards(transform.position, player.position, Time.deltaTime * 3f);
-    }
-
-    private void Stomp()
-    {
-        animator.SetTrigger("Stomp");
-        // Signal player by stomping
-        currentState = State.Attacking;
-    }
-
-    private void ExecuteAttack()
-    {
-        // Select a random attack
-        int attackType = Random.Range(0, 3);
-        switch (attackType)
+        if (attackRangeRayCast.collider != null && canAttack)
         {
-            case 0:
-                animator.SetTrigger("SwordAttack");
-                break;
-            case 1:
-                animator.SetTrigger("MagicFire");
-                break;
-            case 2:
-                animator.SetTrigger("MagicLightning");
-                break;
-            case 3:
-                animator.SetTrigger("MagicBlade");
-                break;
+            anim.SetBool("isAttacking", true);
+            AttackPlayer(direction);
+            canAttack = false;
+            Invoke("ResetAttackCooldown", attackCooldown);
+
+            // Notify subscribers that the enemy is attacking
+            OnEnemyAttack?.Invoke();
         }
-        currentState = State.Idle;
-    }
-
-    private void HandleHurt()
-    {
-        if (currentHealth <= 0)
+        else
         {
-            currentState = State.Dead;
+            anim.SetBool("isAttacking", false);
         }
     }
 
-    private void HandleDeath()
+    private void AttackPlayer(Vector2 direction)
     {
-        animator.SetTrigger("Death");
-        healthBarUI.SetActive(false);
-        // Add logic for the death state
-    }
+        RaycastHit2D attackRangeRayCast = Physics2D.Raycast(attackPoint.position, direction, attackRange, playerLayerMask);
 
-    private bool IsPlayerInRange()
-    {
-        return Vector3.Distance(transform.position, player.position) < detectionRange;
-    }
-
-    private bool IsPlayerInAttackRange()
-    {
-        return Vector3.Distance(transform.position, player.position) < attackRange;
-    }
-
-    public void TakeDamage(float damage)
-    {
-        currentHealth -= damage;
-        animator.SetTrigger("Hurt");
-
-        if (currentHealth <= 0)
+        if (attackRangeRayCast.collider != null && canAttack)
         {
-            currentState = State.Dead;
+            // Apply damage to the player with a chance for critical damage
+            int damageToDeal = (Random.value < criticalChance) ? criticalDamage : baseDamage;
+            player.TakingDamage(damageToDeal);
+
+            // Play attack sound
+            if (audioSource != null)
+            {
+                audioSource.Play();
+            }
         }
+    }
+
+    private void ResetAttackCooldown()
+    {
+        canAttack = true;
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Vector2 direction = spriteRenderer != null && spriteRenderer.flipX ? Vector2.left : Vector2.right;
+        Gizmos.DrawRay(attackPoint.position, direction * attackRange);
     }
 }
 
