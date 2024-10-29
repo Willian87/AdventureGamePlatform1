@@ -6,6 +6,7 @@ TagManager:
   tags:
   - GC
   - ResetArea
+  - Boss
   layers:
   - Default
   - TransparentFX
