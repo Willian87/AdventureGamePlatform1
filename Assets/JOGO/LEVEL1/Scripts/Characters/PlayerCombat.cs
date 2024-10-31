@@ -86,7 +86,8 @@ public class PlayerCombat : MonoBehaviour
         foreach (Collider2D enemy in hitEnemies)
         {
             enemy.GetComponent<EnemyDamage>()?.OnTakingDamage(enemyDamageValue);
-            enemy.GetComponent<BossDamage>()?.OnTakingDamage(enemyDamageValue);
+            //enemy.GetComponent<BossDamage>()?.OnTakingDamage(enemyDamageValue);
+            enemy.GetComponent<BossDamage1>()?.OnTakingDamage(enemyDamageValue);
         }
 
         OnPlayerAttack?.Invoke();
