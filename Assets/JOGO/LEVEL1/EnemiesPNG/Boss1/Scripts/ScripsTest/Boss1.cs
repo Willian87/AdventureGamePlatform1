@@ -65,47 +65,51 @@ public class Boss1 : MonoBehaviour
     private void ChooseRandomAttack()
     {
         // Choose an attack randomly based on the boss state
-        int attackChoice = currentState == BossState.Patrol ? 0 : Random.Range(0, 4);
+        int attackChoice = currentState == BossState.Patrol ? 0 : Random.Range(0, 2);
 
         switch (attackChoice)
         {
+            //case 0:
+            //    SwordAttack();
+            //    break;
             case 0:
-                SwordAttack();
-                break;
-            case 1:
                 MagicBladeAttack();
                 break;
-            case 2:
+            case 1:
                 if (currentState != BossState.Patrol) MagicFireAttack();
                 break;
-            case 3:
+            case 2:
                 if (currentState == BossState.Aggressive) MagicLightningAttack();
                 break;
         }
     }
 
-    private void SwordAttack()
-    {
-        Debug.Log("Boss performs a Sword Attack");
-        AttackPlayer(baseDamage * attackPowerMultiplier);
-    }
+    //private void SwordAttack()
+    //{
+    //    Debug.Log("Boss performs a Sword Attack");
+    //    AttackPlayer(baseDamage * attackPowerMultiplier);
+        
+    //}
 
     private void MagicBladeAttack()
     {
         Debug.Log("Boss performs a Magic Blade Attack");
         AttackPlayer(magicBlade * attackPowerMultiplier);
+        anim.SetTrigger("MagicBlade");
     }
 
     private void MagicFireAttack()
     {
         Debug.Log("Boss casts Magic Fire");
         AttackPlayer(magicFireDamage * attackPowerMultiplier);
+        anim.SetTrigger("MagicFire");
     }
 
     private void MagicLightningAttack()
     {
         Debug.Log("Boss summons Magic Lightning");
         AttackPlayer(magicLightningDamage * attackPowerMultiplier);
+        anim.SetTrigger("MagicLightning");
     }
 
     private void AttackPlayer(float damage)
