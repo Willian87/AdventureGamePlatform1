@@ -13,10 +13,9 @@ GameObject:
   - component: {fileID: 507199877982740022}
   - component: {fileID: 759901887987049106}
   - component: {fileID: 6083574472770831180}
-  - component: {fileID: 1658360666582727226}
-  - component: {fileID: 5320578469278829870}
-  - component: {fileID: 2338778779787973393}
-  - component: {fileID: 9150497480889018485}
+  - component: {fileID: 4531871311553610845}
+  - component: {fileID: 2420943708794248313}
+  - component: {fileID: 6627653392686848706}
   m_Layer: 11
   m_Name: BOSS#1
   m_TagString: Untagged
@@ -185,20 +184,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &1658360666582727226
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 507199877982740023}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5c425836f2b4fd0428565846b3656ae7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  slider: {fileID: 0}
---- !u!114 &5320578469278829870
+--- !u!114 &4531871311553610845
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -216,11 +202,11 @@ MonoBehaviour:
     m_Bits: 64
   player: {fileID: 0}
   attackCooldown: 2
-  attackRange: -0.16
+  attackRange: 0
   baseDamage: 5
   criticalDamage: 20
   criticalChance: 0.2
---- !u!114 &2338778779787973393
+--- !u!114 &2420943708794248313
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -235,7 +221,7 @@ MonoBehaviour:
   maxHealth: 100
   currentHealth: 0
   enemyOut: 2
---- !u!114 &9150497480889018485
+--- !u!114 &6627653392686848706
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -255,7 +241,7 @@ MonoBehaviour:
   playerLayerMask:
     serializedVersion: 2
     m_Bits: 64
-  attackRange: 0.58
+  attackRange: 1
   chaseSpeed: 3.5
 --- !u!1 &8969087285882835469
 GameObject:

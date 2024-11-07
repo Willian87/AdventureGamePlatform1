@@ -42,7 +42,7 @@ public class BossDamage1 : MonoBehaviour
         }
 
         anim.SetBool("isHurting", true);
-        bossScript.OnHealthChange(currentHealth, maxHealth);
+        //bossScript.OnHealthChange(currentHealth, maxHealth);
 
         if (currentHealth <= 0)
         {
