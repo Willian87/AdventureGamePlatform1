@@ -603,7 +603,7 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 507199877982740020, guid: 688255c4d73a35c40baaa42724090c88, type: 3}
-      insertIndex: -1
+      insertIndex: 0
       addedObject: {fileID: 2215983627327702198}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 507199877982740023, guid: 688255c4d73a35c40baaa42724090c88, type: 3}
@@ -640,6 +640,7 @@ MonoBehaviour:
   baseDamage: 5
   criticalDamage: 20
   criticalChance: 0.2
+  magicBlade: 15
   magicFireDamage: 15
   magicLightningDamage: 25
 --- !u!114 &7604828908857463878
