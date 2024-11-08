@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &402582414462263063
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6477996469156812853}
+  m_Layer: 11
+  m_Name: FireAttackPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6477996469156812853
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 402582414462263063}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.035, y: -0.391, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 507199877982740020}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &507199877982740023
 GameObject:
   m_ObjectHideFlags: 0
@@ -16,6 +47,7 @@ GameObject:
   - component: {fileID: 4531871311553610845}
   - component: {fileID: 2420943708794248313}
   - component: {fileID: 6627653392686848706}
+  - component: {fileID: 3449966608649747962}
   m_Layer: 11
   m_Name: BOSS#1
   m_TagString: Untagged
@@ -37,6 +69,9 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8403739509523907084}
+  - {fileID: 6033831152001125220}
+  - {fileID: 6477996469156812853}
+  - {fileID: 9136854422132893579}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &507199877982740021
@@ -243,6 +278,104 @@ MonoBehaviour:
     m_Bits: 64
   attackRange: 1
   chaseSpeed: 3.5
+--- !u!114 &3449966608649747962
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 507199877982740023}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79889faee553c0a41bf324729c94075f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  swordAttackRange: 2
+  swordDamage: 20
+  swordCooldown: 3
+  swordSound: {fileID: 0}
+  swordEffect: {fileID: 0}
+  fireProjectilePrefab: {fileID: 701756280903493198, guid: 59edcc9ccce46e44b8522647551dc228, type: 3}
+  fireSpawnPoint: {fileID: 6477996469156812853}
+  fireCooldown: 5
+  fireProjectileSpeed: 8
+  fireSound: {fileID: 0}
+  fireCastEffect: {fileID: 0}
+  bladeProjectilePrefab: {fileID: 3307757654801057921, guid: a69e4eacb038cd9448f29c621cf2dcd4, type: 3}
+  bladeSpawnPoint: {fileID: 9136854422132893579}
+  bladeCooldown: 7
+  bladeProjectileSpeed: 6
+  bladeSound: {fileID: 0}
+  bladeCastEffect: {fileID: 0}
+  lightningProjectilePrefab: {fileID: 7297738046219958437, guid: 281fc4cdab801a84cb06a0ad069a6c9c, type: 3}
+  lightningSpawnPoint: {fileID: 6033831152001125220}
+  lightningCooldown: 10
+  lightningProjectileSpeed: 10
+  lightningSound: {fileID: 0}
+  lightningCastEffect: {fileID: 0}
+--- !u!1 &5665338785831349045
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6033831152001125220}
+  m_Layer: 11
+  m_Name: LightningAttackPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6033831152001125220
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5665338785831349045}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.035, y: -0.391, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 507199877982740020}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &8581701431245620441
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9136854422132893579}
+  m_Layer: 11
+  m_Name: BladeAttackPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9136854422132893579
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8581701431245620441}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.035, y: -0.391, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 507199877982740020}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8969087285882835469
 GameObject:
   m_ObjectHideFlags: 0
