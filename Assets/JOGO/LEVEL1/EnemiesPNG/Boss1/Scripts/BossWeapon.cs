@@ -80,7 +80,7 @@ public class BossWeapon : MonoBehaviour
         }
     }
 
-    private IEnumerator PerformSwordAttack()
+    public IEnumerator PerformSwordAttack()
     {
         animator.SetTrigger("SwordAttack");
         //audioSource.PlayOneShot(swordSound);
@@ -96,9 +96,9 @@ public class BossWeapon : MonoBehaviour
         yield return new WaitForSeconds(swordCooldown);
     }
 
-    private IEnumerator PerformMagicFireAttack()
+    public IEnumerator PerformMagicFireAttack()
     {
-        animator.SetTrigger("MagicFire");
+        animator.SetTrigger("MagicFireAttack");
         //audioSource.PlayOneShot(fireSound);
         //fireCastEffect.Play();
 
@@ -112,9 +112,9 @@ public class BossWeapon : MonoBehaviour
         Destroy(fireProjectile, 3f);
     }
 
-    private IEnumerator PerformMagicBladeAttack()
+    public IEnumerator PerformMagicBladeAttack()
     {
-        animator.SetTrigger("MagicBlade");
+        animator.SetTrigger("MagicBladeAttack");
         //audioSource.PlayOneShot(bladeSound);
         //bladeCastEffect.Play();
 
@@ -128,9 +128,9 @@ public class BossWeapon : MonoBehaviour
         Destroy(bladeProjectile, 3f);
     }
 
-    private IEnumerator PerformMagicLightningAttack()
+    public IEnumerator PerformMagicLightningAttack()
     {
-        animator.SetTrigger("MagicLightning");
+        animator.SetTrigger("MagicLightningAttack");
         //audioSource.PlayOneShot(lightningSound);
         //lightningCastEffect.Play();
 

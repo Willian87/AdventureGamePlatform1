@@ -48,6 +48,7 @@ GameObject:
   - component: {fileID: 2420943708794248313}
   - component: {fileID: 6627653392686848706}
   - component: {fileID: 3449966608649747962}
+  - component: {fileID: 381851551973478829}
   m_Layer: 11
   m_Name: BOSS#1
   m_TagString: Untagged
@@ -226,7 +227,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 507199877982740023}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fbf043ff536747d4a8a9f64ca2732b5a, type: 3}
   m_Name: 
@@ -248,7 +249,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 507199877982740023}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5d24cae79b60e3c45a9ec8dc28086fe1, type: 3}
   m_Name: 
@@ -263,7 +264,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 507199877982740023}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00801fffbc75305478dc1d31c730fb81, type: 3}
   m_Name: 
@@ -300,20 +301,31 @@ MonoBehaviour:
   fireSpawnPoint: {fileID: 6477996469156812853}
   fireCooldown: 5
   fireProjectileSpeed: 8
-  fireSound: {fileID: 0}
-  fireCastEffect: {fileID: 0}
   bladeProjectilePrefab: {fileID: 3307757654801057921, guid: a69e4eacb038cd9448f29c621cf2dcd4, type: 3}
   bladeSpawnPoint: {fileID: 9136854422132893579}
   bladeCooldown: 7
   bladeProjectileSpeed: 6
-  bladeSound: {fileID: 0}
-  bladeCastEffect: {fileID: 0}
   lightningProjectilePrefab: {fileID: 7297738046219958437, guid: 281fc4cdab801a84cb06a0ad069a6c9c, type: 3}
   lightningSpawnPoint: {fileID: 6033831152001125220}
   lightningCooldown: 10
   lightningProjectileSpeed: 10
-  lightningSound: {fileID: 0}
-  lightningCastEffect: {fileID: 0}
+--- !u!114 &381851551973478829
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 507199877982740023}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53cc8aabeb7fe1643b979a3c6eb3bcbc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  idleDuration: 3
+  patrolDuration: 5
+  maxHealth: 100
+  attackRange: 5
+  chaseRange: 10
 --- !u!1 &5665338785831349045
 GameObject:
   m_ObjectHideFlags: 0
