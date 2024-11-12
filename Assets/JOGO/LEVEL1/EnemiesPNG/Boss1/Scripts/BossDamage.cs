@@ -78,8 +78,8 @@ public class BossDamage : MonoBehaviour
             collider.enabled = false;
         }
 
-        this.GetComponent<Boss>().enabled = false;
-        this.GetComponent<BossPatrol>().enabled = false;
+        this.GetComponent<BossAI>().enabled = false;
+        //this.GetComponent<BossPatrol>().enabled = false;
 
 
         yield return new WaitForSeconds(enemyOut);

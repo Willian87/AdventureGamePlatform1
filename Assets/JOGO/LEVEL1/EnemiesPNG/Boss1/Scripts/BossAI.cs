@@ -3,142 +3,109 @@ using UnityEngine;
 
 public class BossAI : MonoBehaviour
 {
-    private enum BossState { Idle, Walk, Attack, Angry, Defeated }
-    private BossState currentState;
+    private enum BossState { Idle, Angry }
+    private BossState currentState = BossState.Idle;
 
-    private Animator animator;
+    [SerializeField] private float detectionRange = 1.5f;
+    [SerializeField] private LayerMask playerLayerMask;
+
+    private Animator anim;
     private Transform player;
+    private BossWeapon weapon; // Reference to the BossWeapon script
+    private bool hasAttacked; // Track if the boss has attacked
 
-    [Header("Attack Settings")]
-    public float attackRange = 5f;
-    private bool isAttacking = false;
-    private bool isAngry = false;
-
-    void Start()
+    private void Start()
     {
-        animator = GetComponent<Animator>();
-        player = GameObject.FindGameObjectWithTag("Player").transform;
-        currentState = BossState.Idle;
+        anim = GetComponent<Animator>();
+        weapon = GetComponent<BossWeapon>();
+
+        GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
+        if (playerObject != null)
+        {
+            player = playerObject.transform;
+        }
+        else
+        {
+            Debug.LogError("Player object not found. Ensure the player GameObject has the 'Player' tag.");
+        }
+
+        ChangeState(BossState.Idle);
     }
 
-    void Update()
+    private void Update()
     {
-       
-        //HandleStateMachine();
+        if (!hasAttacked)
+        {
+            CheckForPlayer();
+        }
+        HandleStateMachine();
     }
 
     private void HandleStateMachine()
     {
-        float distanceToPlayer = Vector2.Distance(transform.position, player.position);
-
-        switch (currentState)
+        if (currentState == BossState.Angry && !hasAttacked)
         {
-            case BossState.Idle:
-                HandleIdleState(distanceToPlayer);
-                break;
-            case BossState.Walk:
-                HandleWalkState(distanceToPlayer);
-                break;
-            case BossState.Attack:
-                if (!isAttacking)
-                {
-                    StartCoroutine(ExecuteRandomAttack());
-                }
-                break;
-            case BossState.Angry:
-                if (!isAttacking)
-                {
-                    StartCoroutine(ExecuteRandomAttack());
-                }
-                break;
-            case BossState.Defeated:
-                HandleDefeatedState();
-                break;
+            StartCoroutine(PerformSingleRandomAttack());
         }
-    }
-
-    private void HandleIdleState(float distanceToPlayer)
-    {
-        animator.SetBool("IsWalking", false);
-
-        if (distanceToPlayer < attackRange)
-        {
-            ChangeState(BossState.Attack);
-        }
-        else if (distanceToPlayer < attackRange * 2)
-        {
-            ChangeState(BossState.Walk);
-        }
-    }
-
-    private void HandleWalkState(float distanceToPlayer)
-    {
-        animator.SetBool("IsWalking", true);
-
-        if (distanceToPlayer < attackRange)
-        {
-            ChangeState(BossState.Attack);
-        }
-        else if (distanceToPlayer > attackRange * 2)
-        {
-            ChangeState(BossState.Idle);
-        }
-    }
-
-    private IEnumerator ExecuteRandomAttack()
-    {
-        isAttacking = true;
-        animator.SetBool("IsWalking", false);
-
-        int randomAttack = Random.Range(0, 3);
-        switch (randomAttack)
-        {
-            case 0:
-                animator.SetTrigger("SwordAttack");
-                break;
-            case 1:
-                animator.SetTrigger("MagicFire");
-                break;
-            case 2:
-                animator.SetTrigger("MagicBlade");
-                break;
-            case 3:
-                animator.SetTrigger("MagicLightning");
-                break;
-        }
-
-        yield return new WaitForSeconds(1.5f);  // Example attack duration
-
-        isAttacking = false;
-        currentState = isAngry ? BossState.Angry : BossState.Idle;
     }
 
     private void ChangeState(BossState newState)
     {
+        if (currentState == newState) return;
+
         currentState = newState;
+
+        if (newState == BossState.Idle)
+        {
+            anim.SetTrigger("Idle");
+        }
+        else if (newState == BossState.Angry)
+        {
+            anim.SetTrigger("isAngry");
+        }
     }
 
-    private void HandleDefeatedState()
+    private void CheckForPlayer()
     {
-        animator.SetTrigger("Defeated");
-        Destroy(gameObject, 2f);
+        if (currentState != BossState.Idle || player == null) return;
+
+        Vector2 directionToPlayer = (player.position - transform.position).normalized;
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, directionToPlayer, detectionRange, playerLayerMask);
+        Debug.DrawRay(transform.position, directionToPlayer * detectionRange, Color.red);
+
+        if (hit.collider != null && hit.collider.CompareTag("Player"))
+        {
+            ChangeState(BossState.Angry);
+        }
     }
 
-    public void TakeDamage(int damage)
+    private IEnumerator PerformSingleRandomAttack()
     {
-        if (currentState == BossState.Defeated) return;
+        hasAttacked = true;
 
-        // Adjust health here...
-        //if (currentHealth <= maxHealth * 0.5f && !isAngry)
-        //{
-        //    isAngry = true;
-        //    ChangeState(BossState.Angry);
-        //}
-        //else if (currentHealth <= 0)
-        //{
-        //    ChangeState(BossState.Defeated);
-        //}
+        // Choose a random attack
+        int randomAttack = Random.Range(1, 4);
+        switch (randomAttack)
+        {
+            case 1:
+                yield return weapon.PerformMagicFireAttack();
+                break;
+            case 2:
+                yield return weapon.PerformMagicBladeAttack();
+                break;
+            case 3:
+                yield return weapon.PerformMagicLightningAttack();
+                break;
+        }
+
+        yield return new WaitForSeconds(0.5f); // Small delay before returning to Idle
+
+        // Reset to Idle state and prepare for next detection
+        hasAttacked = false;
+        ChangeState(BossState.Idle);
     }
 }
+
+
 
 

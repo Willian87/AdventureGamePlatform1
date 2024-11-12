@@ -87,7 +87,7 @@ public class PlayerCombat : MonoBehaviour
         {
             enemy.GetComponent<EnemyDamage>()?.OnTakingDamage(enemyDamageValue);
             enemy.GetComponent<BossDamage>()?.OnTakingDamage(enemyDamageValue);
-            enemy.GetComponent<BossAI>()?.TakeDamage(enemyDamageValue);
+            //enemy.GetComponent<BossAI>()?.TakeDamage(enemyDamageValue);
         }
 
         OnPlayerAttack?.Invoke();
