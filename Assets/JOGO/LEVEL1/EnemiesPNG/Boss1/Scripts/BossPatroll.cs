@@ -9,20 +9,20 @@ public class BossPatrol : MonoBehaviour
     [SerializeField] private float idleTimeAtPatrolPoint = 2f; // Time to stay idle at patrol points
     private int currentPatrolIndex; // Current target patrol point
 
-    [Header("Chase Limits Settings")]
-    [SerializeField] private Transform chaseLimitPointA;
-    [SerializeField] private Transform chaseLimitPointB;
+    //[Header("Chase Limits Settings")]
+    //[SerializeField] private Transform chaseLimitPointA;
+    //[SerializeField] private Transform chaseLimitPointB;
 
     [Header("Detection Settings")]
     public float detectionRange = 1.5f;       // Range for detection
     [SerializeField] private LayerMask detectionLayerMask; // Layer mask for detection
-    private float originalDetectionRange;
+    //private float originalDetectionRange;
 
     [Header("Attack Settings")]
     [SerializeField] private float attackRange = 1f; // Range to stop and attack
-    [SerializeField] private float chaseSpeed = 3.5f; // Speed when chasing
+    //[SerializeField] private float chaseSpeed = 3.5f; // Speed when chasing
 
-    private bool isChasing = false;
+    //private bool isChasing = false;
     private bool isWalking = false;
     private bool isIdleAtPoint = false;
     private Rigidbody2D rb;
@@ -42,7 +42,7 @@ public class BossPatrol : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        originalDetectionRange = detectionRange;
+        //originalDetectionRange = detectionRange;
     }
 
     private void Update()
@@ -55,7 +55,7 @@ public class BossPatrol : MonoBehaviour
         if (!isIdleAtPoint)
         {
             Patrol();
-            CheckForObjectsInRange();
+            //CheckForObjectsInRange();
         }
 
         animator.SetBool("isWalking", isWalking);
@@ -91,14 +91,14 @@ public class BossPatrol : MonoBehaviour
         currentPatrolIndex = (currentPatrolIndex + 1) % patrolPoints.Length;
     }
 
-    private void CheckForObjectsInRange()
-    {
-        Collider2D detectedObject = Physics2D.OverlapCircle(transform.position, detectionRange, detectionLayerMask);
-        if (detectedObject != null /*&& !IsBeyondChasingLimits()*/)
-        {
-            isChasing = true;
-        }
-    }
+    //private void CheckForObjectsInRange()
+    //{
+    //    Collider2D detectedObject = Physics2D.OverlapCircle(transform.position, detectionRange, detectionLayerMask);
+    //    if (detectedObject != null /*&& !IsBeyondChasingLimits()*/)
+    //    {
+    //        isChasing = true;
+    //    }
+    //}
 
     //private void Chase()
     //{
