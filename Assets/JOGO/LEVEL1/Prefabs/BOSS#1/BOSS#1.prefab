@@ -44,6 +44,7 @@ GameObject:
   - component: {fileID: 507199877982740022}
   - component: {fileID: 759901887987049106}
   - component: {fileID: 6083574472770831180}
+  - component: {fileID: 1584835832532397938}
   - component: {fileID: 6010187103364352502}
   - component: {fileID: 7644559002828901668}
   - component: {fileID: 2877754316650576511}
@@ -218,6 +219,28 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &1584835832532397938
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 507199877982740023}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00801fffbc75305478dc1d31c730fb81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  patrolPoints: []
+  patrolSpeed: 2
+  chaseLimitPointA: {fileID: 0}
+  chaseLimitPointB: {fileID: 0}
+  detectionRange: 1.5
+  playerLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
+  attackRange: 1
+  chaseSpeed: 3.5
 --- !u!114 &6010187103364352502
 MonoBehaviour:
   m_ObjectHideFlags: 0

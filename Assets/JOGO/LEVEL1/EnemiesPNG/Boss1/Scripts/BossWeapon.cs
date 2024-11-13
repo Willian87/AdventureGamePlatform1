@@ -1,3 +1,5 @@
+
+
 using System.Collections;
 using UnityEngine;
 
@@ -56,28 +58,7 @@ public class BossWeapon : MonoBehaviour
 
     private void Update()
     {
-        //float distanceToPlayer = Vector2.Distance(transform.position, player.position);
 
-        //if (Time.time >= nextSwordAttackTime && distanceToPlayer <= swordAttackRange)
-        //{
-        //    StartCoroutine(PerformSwordAttack());
-        //    nextSwordAttackTime = Time.time + swordCooldown;
-        //}
-        //else if (Time.time >= nextFireAttackTime && distanceToPlayer > swordAttackRange)
-        //{
-        //    StartCoroutine(PerformMagicFireAttack());
-        //    nextFireAttackTime = Time.time + fireCooldown;
-        //}
-        //else if (Time.time >= nextBladeAttackTime && distanceToPlayer > swordAttackRange)
-        //{
-        //    StartCoroutine(PerformMagicBladeAttack());
-        //    nextBladeAttackTime = Time.time + bladeCooldown;
-        //}
-        //else if (Time.time >= nextLightningAttackTime && distanceToPlayer > swordAttackRange)
-        //{
-        //    StartCoroutine(PerformMagicLightningAttack());
-        //    nextLightningAttackTime = Time.time + lightningCooldown;
-        //}
     }
 
     public IEnumerator PerformSwordAttack()
@@ -144,4 +125,7 @@ public class BossWeapon : MonoBehaviour
         Destroy(lightningProjectile, 3f);
     }
 }
+
+
+
 

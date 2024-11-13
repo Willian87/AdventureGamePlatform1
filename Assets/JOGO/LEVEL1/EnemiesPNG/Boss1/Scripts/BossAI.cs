@@ -98,7 +98,7 @@ public class BossAI : MonoBehaviour
                 break;
         }
 
-        yield return new WaitForSeconds(0.5f); // Small delay before returning to Idle
+        yield return new WaitForSeconds(1f); // Small delay before returning to Idle
 
         // Reset to Idle state and prepare for next detection
         hasAttacked = false;
