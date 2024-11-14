@@ -4,30 +4,23 @@ using UnityEngine;
 public class BossPatrol : MonoBehaviour
 {
     [Header("Patrol Settings")]
-    [SerializeField] private Transform[] patrolPoints; // Points for patrolling
+    [SerializeField] private Transform[] patrolPoints; // Patrol points for boss
     [SerializeField] private float patrolSpeed = 2f;  // Speed of patrolling
-    [SerializeField] private float idleTimeAtPatrolPoint = 2f; // Time to stay idle at patrol points
-    private int currentPatrolIndex; // Current target patrol point
-
-    //[Header("Chase Limits Settings")]
-    //[SerializeField] private Transform chaseLimitPointA;
-    //[SerializeField] private Transform chaseLimitPointB;
-
-    [Header("Detection Settings")]
-    public float detectionRange = 1.5f;       // Range for detection
-    [SerializeField] private LayerMask detectionLayerMask; // Layer mask for detection
-    //private float originalDetectionRange;
+    [SerializeField] private float idleTimeAtPatrolPoint = 2f; // Idle time at each patrol point
+    private int currentPatrolIndex;                   // Current patrol point index
 
     [Header("Attack Settings")]
-    [SerializeField] private float attackRange = 1f; // Range to stop and attack
-    //[SerializeField] private float chaseSpeed = 3.5f; // Speed when chasing
+    [SerializeField] private float detectionRange = 1.5f;       // Range for detecting player
+    [SerializeField] private LayerMask playerLayerMask;         // Layer mask for player detection
+    [SerializeField] private float attackRange = 1f;            // Range for attacking player
+    [SerializeField] private float attackCooldown = 2f;         // Cooldown time between attacks
+    private bool canAttack = true;                              // To control attack cooldown
 
-    //private bool isChasing = false;
-    private bool isWalking = false;
-    private bool isIdleAtPoint = false;
-    private Rigidbody2D rb;
-    private Animator animator;
-    private SpriteRenderer spriteRenderer;
+    private bool isWalking = false;                             // Patrol state
+    private bool isIdleAtPoint = false;                         // Idle state at patrol point
+    private Rigidbody2D rb;                                     // Reference to Rigidbody2D
+    private Animator animator;                                  // Reference to Animator
+    private SpriteRenderer spriteRenderer;                      // Reference to SpriteRenderer
 
     private void Start()
     {
@@ -42,20 +35,17 @@ public class BossPatrol : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        //originalDetectionRange = detectionRange;
     }
 
     private void Update()
     {
-        //if (isChasing)
-        //{
-        //    Chase();
-        //}
-        //else
-        if (!isIdleAtPoint)
+        if (PlayerInRange(attackRange))
+        {
+            StopAndAttack();
+        }
+        else if (!isIdleAtPoint)
         {
             Patrol();
-            //CheckForObjectsInRange();
         }
 
         animator.SetBool("isWalking", isWalking);
@@ -66,53 +56,17 @@ public class BossPatrol : MonoBehaviour
         Transform targetPatrolPoint = patrolPoints[currentPatrolIndex];
         MoveTowards(targetPatrolPoint.position, patrolSpeed);
 
-        // Check if the boss is near the target patrol point
+        // Check if the boss has reached the patrol point
         if (Vector2.Distance(transform.position, targetPatrolPoint.position) < 0.2f)
         {
             isWalking = false;
             isIdleAtPoint = true;
             animator.SetBool("isWalking", false);
 
-            // Flip to face the next patrol point direction
             FlipTowardsNextPoint();
-
             StartCoroutine(IdleAtPatrolPoint());
         }
     }
-
-    private IEnumerator IdleAtPatrolPoint()
-    {
-        animator.SetTrigger("Idle");
-
-        yield return new WaitForSeconds(idleTimeAtPatrolPoint);
-
-        // Move to the next patrol point after idle time
-        isIdleAtPoint = false;
-        currentPatrolIndex = (currentPatrolIndex + 1) % patrolPoints.Length;
-    }
-
-    //private void CheckForObjectsInRange()
-    //{
-    //    Collider2D detectedObject = Physics2D.OverlapCircle(transform.position, detectionRange, detectionLayerMask);
-    //    if (detectedObject != null /*&& !IsBeyondChasingLimits()*/)
-    //    {
-    //        isChasing = true;
-    //    }
-    //}
-
-    //private void Chase()
-    //{
-    //    if (IsBeyondChasingLimits())
-    //    {
-    //        isChasing = false;
-    //        detectionRange = 0; // Set detection range to zero when beyond the chase limits
-    //    }
-    //    else
-    //    {
-    //        detectionRange = originalDetectionRange; // Restore the detection range when within chase limits
-    //        isChasing = false;
-    //    }
-    //}
 
     private void MoveTowards(Vector2 targetPosition, float speed)
     {
@@ -123,20 +77,50 @@ public class BossPatrol : MonoBehaviour
 
     private void FlipTowardsNextPoint()
     {
-        // Flip the boss sprite to face the next patrol point
+        // Flip the boss to face the next patrol point
         Transform nextPatrolPoint = patrolPoints[(currentPatrolIndex + 1) % patrolPoints.Length];
         spriteRenderer.flipX = (nextPatrolPoint.position.x < transform.position.x);
     }
 
-    //private bool IsBeyondChasingLimits()
-    //{
-    //    float enemyPositionX = transform.position.x;
-    //    float limitPointAX = chaseLimitPointA.position.x;
-    //    float limitPointBX = chaseLimitPointB.position.x;
+    private IEnumerator IdleAtPatrolPoint()
+    {
+        animator.SetTrigger("Idle");
+        yield return new WaitForSeconds(idleTimeAtPatrolPoint);
 
-    //    return enemyPositionX < Mathf.Min(limitPointAX, limitPointBX) || enemyPositionX > Mathf.Max(limitPointAX, limitPointBX);
-    //}
+        isIdleAtPoint = false;
+        currentPatrolIndex = (currentPatrolIndex + 1) % patrolPoints.Length;
+    }
+
+    private bool PlayerInRange(float range)
+    {
+        Collider2D playerInRange = Physics2D.OverlapCircle(transform.position, range, playerLayerMask);
+        return playerInRange != null;
+    }
+
+    private void StopAndAttack()
+    {
+        if (canAttack)
+        {
+            animator.SetTrigger("Attack");
+            canAttack = false;
+            Invoke("ResetAttackCooldown", attackCooldown);
+        }
+        isWalking = false;
+    }
+
+    private void ResetAttackCooldown()
+    {
+        canAttack = true;
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, attackRange);
+    }
 }
+
+
 
 
 

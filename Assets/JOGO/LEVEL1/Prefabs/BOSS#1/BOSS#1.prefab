@@ -48,6 +48,7 @@ GameObject:
   - component: {fileID: 6010187103364352502}
   - component: {fileID: 7644559002828901668}
   - component: {fileID: 2877754316650576511}
+  - component: {fileID: 3895926360390145607}
   m_Layer: 11
   m_Name: BOSS#1
   m_TagString: Untagged
@@ -233,14 +234,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   patrolPoints: []
   patrolSpeed: 2
-  chaseLimitPointA: {fileID: 0}
-  chaseLimitPointB: {fileID: 0}
+  idleTimeAtPatrolPoint: 2
   detectionRange: 1.5
-  playerLayerMask:
+  detectionLayerMask:
     serializedVersion: 2
     m_Bits: 0
   attackRange: 1
-  chaseSpeed: 3.5
 --- !u!114 &6010187103364352502
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -268,7 +267,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53cc8aabeb7fe1643b979a3c6eb3bcbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detectionRange: 1.5
   playerLayerMask:
     serializedVersion: 2
     m_Bits: 0
@@ -302,6 +300,28 @@ MonoBehaviour:
   lightningSpawnPoint: {fileID: 0}
   lightningCooldown: 10
   lightningProjectileSpeed: 10
+--- !u!114 &3895926360390145607
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 507199877982740023}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbf043ff536747d4a8a9f64ca2732b5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackPoint: {fileID: 8403739509523907084}
+  playerLayerMask:
+    serializedVersion: 2
+    m_Bits: 64
+  player: {fileID: 0}
+  attackCooldown: 2
+  attackRange: 0
+  baseDamage: 5
+  criticalDamage: 20
+  criticalChance: 0.2
 --- !u!1 &5665338785831349045
 GameObject:
   m_ObjectHideFlags: 0

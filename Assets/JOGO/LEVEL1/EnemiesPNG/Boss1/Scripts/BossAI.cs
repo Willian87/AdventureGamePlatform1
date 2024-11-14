@@ -6,11 +6,11 @@ public class BossAI : MonoBehaviour
     private enum BossState { Idle, Angry }
     private BossState currentState = BossState.Idle;
 
-    [SerializeField] private float detectionRange = 1.5f;
+    //[SerializeField] private float detectionRange = 1.5f;
     [SerializeField] private LayerMask playerLayerMask;
 
     private Animator anim;
-    private Transform player;
+    //private Transform player;
     private BossWeapon weapon; // Reference to the BossWeapon script
     private bool hasAttacked; // Track if the boss has attacked
 
@@ -19,25 +19,25 @@ public class BossAI : MonoBehaviour
         anim = GetComponent<Animator>();
         weapon = GetComponent<BossWeapon>();
 
-        GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
-        if (playerObject != null)
-        {
-            player = playerObject.transform;
-        }
-        else
-        {
-            Debug.LogError("Player object not found. Ensure the player GameObject has the 'Player' tag.");
-        }
+        //GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
+        //if (playerObject != null)
+        //{
+        //    player = playerObject.transform;
+        //}
+        //else
+        //{
+        //    Debug.LogError("Player object not found. Ensure the player GameObject has the 'Player' tag.");
+        //}
 
         ChangeState(BossState.Idle);
     }
 
     private void Update()
     {
-        if (!hasAttacked)
-        {
-            CheckForPlayer();
-        }
+        //if (!hasAttacked)
+        //{
+        //    CheckForPlayer();
+        //}
         HandleStateMachine();
     }
 
@@ -65,19 +65,19 @@ public class BossAI : MonoBehaviour
         }
     }
 
-    private void CheckForPlayer()
-    {
-        if (currentState != BossState.Idle || player == null) return;
+    //private void CheckForPlayer()
+    //{
+    //    if (currentState != BossState.Idle || player == null) return;
 
-        Vector2 directionToPlayer = (player.position - transform.position).normalized;
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, directionToPlayer, detectionRange, playerLayerMask);
-        Debug.DrawRay(transform.position, directionToPlayer * detectionRange, Color.red);
+    //    Vector2 directionToPlayer = (player.position - transform.position).normalized;
+    //    RaycastHit2D hit = Physics2D.Raycast(transform.position, directionToPlayer, detectionRange, playerLayerMask);
+    //    Debug.DrawRay(transform.position, directionToPlayer * detectionRange, Color.red);
 
-        if (hit.collider != null && hit.collider.CompareTag("Player"))
-        {
-            ChangeState(BossState.Angry);
-        }
-    }
+    //    if (hit.collider != null && hit.collider.CompareTag("Player"))
+    //    {
+    //        ChangeState(BossState.Angry);
+    //    }
+    //}
 
     private IEnumerator PerformSingleRandomAttack()
     {

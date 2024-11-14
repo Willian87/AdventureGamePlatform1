@@ -1,82 +1,65 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Boss : MonoBehaviour
 {
-    Animator anim;
-    AudioSource audioSource;
+    private Animator anim;
+    private AudioSource audioSource;
 
-    public Transform attackPoint;
-    
+    [SerializeField] private Transform attackPoint;
     [SerializeField] private LayerMask playerLayerMask;
-
-    [SerializeField] private PlayerCombat player;
-
-    [Header("Advanced Settings")]
     [SerializeField] private float attackCooldown = 2f;
-    private bool canAttack = true;
-    [SerializeField] private float attackRange;
+    [SerializeField] private float attackRange = 1f;
     [SerializeField] private int baseDamage = 5;
     [SerializeField] private int criticalDamage = 20;
     [SerializeField] private float criticalChance = 0.2f;
 
-    public delegate void EnemyEvent();
-    public static event EnemyEvent OnEnemyAttack;
-    private float nextAttackTime;
-
+    private bool canAttack = true;
     private SpriteRenderer spriteRenderer;
 
     void Start()
     {
         anim = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
-        player = FindObjectOfType<PlayerCombat>();
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     void Update()
     {
-        nextAttackTime += Time.deltaTime;
-        if (nextAttackTime >= 2)
+        if (IsPlayerInRange() && canAttack)
         {
             EAttack();
-            nextAttackTime = 0f;
         }
     }
 
-    public void EAttack()
+    private bool IsPlayerInRange()
     {
         Vector2 direction = spriteRenderer.flipX ? Vector2.left : Vector2.right;
-        RaycastHit2D attackRangeRayCast = Physics2D.Raycast(attackPoint.position, direction, attackRange, playerLayerMask);
+        RaycastHit2D hit = Physics2D.Raycast(attackPoint.position, direction, attackRange, playerLayerMask);
+        return hit.collider != null;
+    }
 
-        if (attackRangeRayCast.collider != null && canAttack)
-        {
-            anim.SetBool("isAttacking", true);
-            AttackPlayer(direction);
-            canAttack = false;
-            Invoke("ResetAttackCooldown", attackCooldown);
-
-            // Notify subscribers that the enemy is attacking
-            OnEnemyAttack?.Invoke();
-        }
-        else
-        {
-            anim.SetBool("isAttacking", false);
-        }
+    private void EAttack()
+    {
+        anim.SetBool("isAttacking", true);
+        Vector2 direction = spriteRenderer.flipX ? Vector2.left : Vector2.right;
+        AttackPlayer(direction);
+        canAttack = false;
+        Invoke(nameof(ResetAttackCooldown), attackCooldown);
     }
 
     private void AttackPlayer(Vector2 direction)
     {
-        RaycastHit2D attackRangeRayCast = Physics2D.Raycast(attackPoint.position, direction, attackRange, playerLayerMask);
+        RaycastHit2D hit = Physics2D.Raycast(attackPoint.position, direction, attackRange, playerLayerMask);
 
-        if (attackRangeRayCast.collider != null && canAttack)
+        if (hit.collider != null)
         {
-            // Apply damage to the player with a chance for critical damage
             int damageToDeal = (Random.value < criticalChance) ? criticalDamage : baseDamage;
-            player.TakingDamage(damageToDeal);
 
-            // Play attack sound
+            if (hit.collider.TryGetComponent(out PlayerCombat player))
+            {
+                player.TakingDamage(damageToDeal);
+            }
+
             if (audioSource != null)
             {
                 audioSource.Play();
@@ -87,6 +70,7 @@ public class Boss : MonoBehaviour
     private void ResetAttackCooldown()
     {
         canAttack = true;
+        anim.SetBool("isAttacking", false);
     }
 
     private void OnDrawGizmosSelected()
@@ -96,6 +80,8 @@ public class Boss : MonoBehaviour
         Gizmos.DrawRay(attackPoint.position, direction * attackRange);
     }
 }
+
+
 
 
 //using System.Collections;
