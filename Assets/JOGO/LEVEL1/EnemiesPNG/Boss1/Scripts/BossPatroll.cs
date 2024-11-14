@@ -1,3 +1,4 @@
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -129,14 +130,7 @@ public class BossPatrol : MonoBehaviour
         float limitPointBX = chaseLimitPointB.position.x;
 
         bool isBeyondLimits = enemyPositionX < Mathf.Min(limitPointAX, limitPointBX) || enemyPositionX > Mathf.Max(limitPointAX, limitPointBX);
-        //if (isBeyondLimits)
-        //{
-        //    detectionRange = 0; // Set detection range to zero when beyond the chase limits
-        //}
-        //else
-        //{
-        //    detectionRange = 1.5f;
-        //}
+
         return isBeyondLimits;
     }
     private void AttackPlayer()
@@ -150,16 +144,6 @@ public class BossPatrol : MonoBehaviour
         isWalking = true;
         Vector2 newPosition = Vector2.MoveTowards(rb.position, targetPosition, speed * Time.deltaTime);
         rb.MovePosition(newPosition);
-
-        //if (targetPosition.x > transform.position.x) // Moving to the right
-        //{
-        //    transform.rotation = Quaternion.Euler(0, 0, 0); // Face right (no Y rotation)
-
-        //}
-        //else if (targetPosition.x < transform.position.x) // Moving to the left
-        //{
-        //    transform.rotation = Quaternion.Euler(0, 180, 0); // Rotate 180 degrees to face left
-        //}
 
         //Flip the enemy based on the direction
         if (targetPosition.x > transform.position.x)
