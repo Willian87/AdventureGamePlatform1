@@ -44,11 +44,9 @@ GameObject:
   - component: {fileID: 507199877982740022}
   - component: {fileID: 759901887987049106}
   - component: {fileID: 6083574472770831180}
-  - component: {fileID: 1584835832532397938}
-  - component: {fileID: 6010187103364352502}
-  - component: {fileID: 7644559002828901668}
-  - component: {fileID: 2877754316650576511}
-  - component: {fileID: 3895926360390145607}
+  - component: {fileID: 4708011183904679926}
+  - component: {fileID: 1264696924580404280}
+  - component: {fileID: 6089077132969187848}
   m_Layer: 11
   m_Name: BOSS#1
   m_TagString: Untagged
@@ -70,6 +68,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8403739509523907084}
+  - {fileID: 587988117550476166}
   - {fileID: 6033831152001125220}
   - {fileID: 6477996469156812853}
   - {fileID: 9136854422132893579}
@@ -220,7 +219,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &1584835832532397938
+--- !u!114 &4708011183904679926
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -229,33 +228,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 507199877982740023}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 00801fffbc75305478dc1d31c730fb81, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  patrolPoints: []
-  patrolSpeed: 2
-  idleTimeAtPatrolPoint: 2
-  detectionRange: 1.5
-  detectionLayerMask:
-    serializedVersion: 2
-    m_Bits: 0
-  attackRange: 1
---- !u!114 &6010187103364352502
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 507199877982740023}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d24cae79b60e3c45a9ec8dc28086fe1, type: 3}
+  m_Script: {fileID: 11500000, guid: 8b6ebea9f6404e8488c8138416ad540d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
   currentHealth: 0
   enemyOut: 2
---- !u!114 &7644559002828901668
+--- !u!114 &1264696924580404280
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -264,13 +243,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 507199877982740023}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 53cc8aabeb7fe1643b979a3c6eb3bcbc, type: 3}
+  m_Script: {fileID: 11500000, guid: 278264ec53bbd2b4aae56ba8f551ba52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  patrolPoints: []
+  patrolSpeed: 2
+  chaseLimitPointA: {fileID: 0}
+  chaseLimitPointB: {fileID: 0}
+  detectionRange: 1.5
   playerLayerMask:
     serializedVersion: 2
-    m_Bits: 0
---- !u!114 &2877754316650576511
+    m_Bits: 64
+  attackRange: 1
+  chaseSpeed: 3.5
+--- !u!114 &6089077132969187848
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -279,49 +265,50 @@ MonoBehaviour:
   m_GameObject: {fileID: 507199877982740023}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 79889faee553c0a41bf324729c94075f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  swordAttackRange: 2
-  swordDamage: 20
-  swordCooldown: 3
-  swordSound: {fileID: 0}
-  swordEffect: {fileID: 0}
-  fireProjectilePrefab: {fileID: 701756280903493198, guid: 59edcc9ccce46e44b8522647551dc228, type: 3}
-  fireSpawnPoint: {fileID: 0}
-  fireCooldown: 5
-  fireProjectileSpeed: 8
-  bladeProjectilePrefab: {fileID: 3307757654801057921, guid: a69e4eacb038cd9448f29c621cf2dcd4, type: 3}
-  bladeSpawnPoint: {fileID: 0}
-  bladeCooldown: 7
-  bladeProjectileSpeed: 6
-  lightningProjectilePrefab: {fileID: 7297738046219958437, guid: 281fc4cdab801a84cb06a0ad069a6c9c, type: 3}
-  lightningSpawnPoint: {fileID: 0}
-  lightningCooldown: 10
-  lightningProjectileSpeed: 10
---- !u!114 &3895926360390145607
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 507199877982740023}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fbf043ff536747d4a8a9f64ca2732b5a, type: 3}
+  m_Script: {fileID: 11500000, guid: 21ada9ed4638dda4fba59607415ecd6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   attackPoint: {fileID: 8403739509523907084}
+  attackRange: 0
   playerLayerMask:
     serializedVersion: 2
     m_Bits: 64
   player: {fileID: 0}
   attackCooldown: 2
-  attackRange: 0
   baseDamage: 5
   criticalDamage: 20
   criticalChance: 0.2
+--- !u!1 &2800312056034186032
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 587988117550476166}
+  m_Layer: 11
+  m_Name: AttackRangePos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &587988117550476166
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2800312056034186032}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.73, y: -0.391, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 507199877982740020}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5665338785831349045
 GameObject:
   m_ObjectHideFlags: 0

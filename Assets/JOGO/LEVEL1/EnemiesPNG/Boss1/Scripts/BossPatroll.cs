@@ -14,6 +14,7 @@ public class BossPatrol : MonoBehaviour
     [SerializeField] private LayerMask playerLayerMask;         // Layer mask for player detection
     [SerializeField] private float attackRange = 1f;            // Range for attacking player
     [SerializeField] private float attackCooldown = 2f;         // Cooldown time between attacks
+    [SerializeField] private Transform attackRangePos;
     private bool canAttack = true;                              // To control attack cooldown
 
     private bool isWalking = false;                             // Patrol state
