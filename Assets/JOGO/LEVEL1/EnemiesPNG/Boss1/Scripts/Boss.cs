@@ -21,8 +21,8 @@ public class Boss : MonoBehaviour
 
     [Header("Advanced Settings")]
     [SerializeField] private float attackCooldown = 2f; // Melee attack cooldown
-    [SerializeField] private float magicFireCooldown = 5f; // Magic fire cooldown
-    [SerializeField] private float LightningCooldown = 8f;
+    [SerializeField] private float magicFireCooldown = 3f; // Magic fire cooldown
+    [SerializeField] private float LightningCooldown = 3f;
     private bool canAttack = true;
     private bool canCastMagicFire = true;
     private bool canCastLightningAttack = true;
@@ -130,11 +130,13 @@ public class Boss : MonoBehaviour
     {
         Vector2 direction = spriteRenderer.flipX ? Vector2.left : Vector2.right;
         RaycastHit2D hit = Physics2D.Raycast(LightningAttackPoint.position, direction, lightningRange, playerLayerMask);
-        if(hit.collider != null)
+        if(hit.collider != null && canCastLightningAttack)
         {
             //anim.SetBool("LightningAttack", true);
             
             LightningAttack();
+            canCastLightningAttack = false;
+            Invoke("ResetMagicLightningCooldown", LightningCooldown);
         }
         else
         {
