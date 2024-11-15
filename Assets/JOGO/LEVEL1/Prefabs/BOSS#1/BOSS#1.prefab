@@ -45,8 +45,7 @@ GameObject:
   - component: {fileID: 759901887987049106}
   - component: {fileID: 6083574472770831180}
   - component: {fileID: 5338470113584463363}
-  - component: {fileID: 531548282250203594}
-  - component: {fileID: 7349434203014324776}
+  - component: {fileID: 1553170169676210352}
   m_Layer: 11
   m_Name: BOSS#1
   m_TagString: Untagged
@@ -68,6 +67,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8403739509523907084}
+  - {fileID: 8924295428435861573}
   - {fileID: 587988117550476166}
   - {fileID: 6033831152001125220}
   - {fileID: 6477996469156812853}
@@ -234,29 +234,7 @@ MonoBehaviour:
   maxHealth: 100
   currentHealth: 0
   enemyOut: 2
---- !u!114 &531548282250203594
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 507199877982740023}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 00801fffbc75305478dc1d31c730fb81, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  patrolPoints: []
-  patrolSpeed: 2
-  chaseLimitPointA: {fileID: 0}
-  chaseLimitPointB: {fileID: 0}
-  detectionRange: 1.5
-  playerLayerMask:
-    serializedVersion: 2
-    m_Bits: 64
-  attackRange: 1
-  chaseSpeed: 3.5
---- !u!114 &7349434203014324776
+--- !u!114 &1553170169676210352
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -269,12 +247,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackPoint: {fileID: 8403739509523907084}
-  attackRange: -1
+  magicFireAttackPoint: {fileID: 8924295428435861573}
+  LighningAttackPoint: {fileID: 6033831152001125220}
+  attackRange: 1
+  magicFireRange: 1
+  lightningRange: 1.61
   playerLayerMask:
     serializedVersion: 2
     m_Bits: 64
   player: {fileID: 0}
   attackCooldown: 2
+  magicFireCooldown: 5
+  LightningCooldown: 8
   baseDamage: 5
   criticalDamage: 20
   criticalChance: 0.2
@@ -334,7 +318,38 @@ Transform:
   m_GameObject: {fileID: 5665338785831349045}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.035, y: -0.391, z: 0}
+  m_LocalPosition: {x: 2.22, y: -0.32, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 507199877982740020}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7111438972525161586
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8924295428435861573}
+  m_Layer: 11
+  m_Name: MagicFireAttackPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8924295428435861573
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7111438972525161586}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.63, y: -0.391, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -396,7 +411,7 @@ Transform:
   m_GameObject: {fileID: 8969087285882835469}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.035, y: -0.391, z: 0}
+  m_LocalPosition: {x: 0.62, y: -0.31, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

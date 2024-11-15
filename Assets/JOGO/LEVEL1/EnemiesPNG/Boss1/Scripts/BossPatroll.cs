@@ -16,13 +16,14 @@ public class BossPatrol : MonoBehaviour
     private int currentLimitPoint;
 
     [Header("Detection Settings")]
-    public float detectionRange = 1.5f;       // Range to detect the player
+    public float detectionRange;       // Range to detect the player
     [SerializeField] private LayerMask playerLayerMask;       // Layer mask for detecting the player
     float originalDetectionRange;
 
     [Header("Attack Settings")]
     [SerializeField] private float attackRange = 1f;          // Range to stop and attack the player
     [SerializeField] private float chaseSpeed = 3.5f;         // Speed when chasing the player
+    [SerializeField] private float magicFireRange = 3.5f;
 
     private Transform player;
     private bool isChasingPlayer = false;
@@ -89,6 +90,39 @@ public class BossPatrol : MonoBehaviour
         }
     }
 
+    //private void ChasePlayer()
+    //{
+    //    float distanceToPlayer = Vector2.Distance(transform.position, player.position);
+
+    //    if (IsBeyondChasingLimits())
+    //    {
+    //        isChasingPlayer = false;
+    //        detectionRange = 0; // Set detection range to zero when beyond the chase limits
+    //    }
+    //    else if (distanceToPlayer > detectionRange)
+    //    {
+    //        detectionRange = originalDetectionRange; // Restore the detection range when within chase limits
+    //        isChasingPlayer = false;
+    //    }
+
+    //    if (distanceToPlayer > detectionRange /*|| IsBeyondChasingLimits()*/)
+    //    {
+    //        isChasingPlayer = false;
+    //    }
+    //    else if (distanceToPlayer > attackRange)
+    //    {
+    //        Vector2 direction = (player.position - transform.position).normalized;
+    //        Vector2 targetPosition = new Vector2(player.position.x, rb.position.y); // Keep the enemy on the ground
+    //        MoveTowards(targetPosition, chaseSpeed);
+    //    }
+    //    else
+    //    {
+    //        // Stop and prepare to attack the player
+    //        isWalking = false;
+    //        AttackPlayer();
+    //    }
+    //}
+
     private void ChasePlayer()
     {
         float distanceToPlayer = Vector2.Distance(transform.position, player.position);
@@ -96,32 +130,36 @@ public class BossPatrol : MonoBehaviour
         if (IsBeyondChasingLimits())
         {
             isChasingPlayer = false;
-            detectionRange = 0; // Set detection range to zero when beyond the chase limits
+            detectionRange = 0;
         }
         else if (distanceToPlayer > detectionRange)
         {
-            detectionRange = originalDetectionRange; // Restore the detection range when within chase limits
+            detectionRange = originalDetectionRange;
             isChasingPlayer = false;
         }
 
-        if (distanceToPlayer > detectionRange /*|| IsBeyondChasingLimits()*/)
+        if (distanceToPlayer > detectionRange)
         {
             isChasingPlayer = false;
         }
-        else if (distanceToPlayer > attackRange)
+        else if (distanceToPlayer <= magicFireRange && distanceToPlayer > attackRange)
         {
-            Vector2 direction = (player.position - transform.position).normalized;
-            Vector2 targetPosition = new Vector2(player.position.x, rb.position.y); // Keep the enemy on the ground
-            MoveTowards(targetPosition, chaseSpeed);
+            // Magic fire attack range
+            isWalking = false;
+            GetComponent<Boss>().TryMagicFireAttack(); // Call the magic fire attack
+        }
+        else if (distanceToPlayer <= attackRange)
+        {
+            // Melee attack range
+            isWalking = false;
+            GetComponent<Boss>().TryMeleeAttack(); // Call the melee attack
         }
         else
         {
-            // Stop and prepare to attack the player
-            isWalking = false;
-            AttackPlayer();
+            Vector2 targetPosition = new Vector2(player.position.x, rb.position.y);
+            MoveTowards(targetPosition, chaseSpeed);
         }
     }
-
 
     bool IsBeyondChasingLimits()
     {

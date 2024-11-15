@@ -4,41 +4,25 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    //[SerializeField] private float bulletSpeed = 10f;
-    //private Rigidbody2D rb;
+    public float speed = 10f;
+    public int damage = 20;
+    public float lifetime = 5f;
 
-    [SerializeField] private GameObject impactPrefab;
+    [SerializeField] private LayerMask playerLayerMask;
 
-    //PlayerCombat player;
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        //rb = GetComponent<Rigidbody2D>();
-        //player = GetComponent<PlayerCombat>();
-        //Destroy(gameObject, 3f);
-        //rb.velocity = transform.right * bulletSpeed;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
+        Destroy(gameObject, lifetime);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (collision.CompareTag("Player"))
         {
-            Debug.Log("Toma safado!");
-            collision.GetComponent<PlayerCombat>().TakingDamage(10);
-
+            // Deal damage to the player
+            collision.GetComponent<PlayerCombat>().TakingDamage(damage);
+            Destroy(gameObject);
         }
-
-
-        Instantiate(impactPrefab, transform.position, transform.rotation);
-
-
-        Destroy(gameObject);
     }
-
 }
+
