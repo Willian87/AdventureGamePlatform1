@@ -9,7 +9,7 @@ public class Boss : MonoBehaviour
 
     public Transform attackPoint;
     public Transform magicFireAttackPoint;
-    public Transform LighningAttackPoint;
+    public Transform LightningAttackPoint;
 
     public float attackRange;
     public float magicFireRange;
@@ -53,6 +53,7 @@ public class Boss : MonoBehaviour
         {
             TryMagicFireAttack();
             TryMeleeAttack();
+            TryLightningAttack();
             nextAttackTime = 0f;
         }
     }
@@ -125,15 +126,30 @@ public class Boss : MonoBehaviour
         }
     }
 
+    void TryLightningAttack()
+    {
+        Vector2 direction = spriteRenderer.flipX ? Vector2.left : Vector2.right;
+        RaycastHit2D hit = Physics2D.Raycast(LightningAttackPoint.position, direction, lightningRange, playerLayerMask);
+        if(hit.collider != null)
+        {
+            //anim.SetBool("LightningAttack", true);
+            
+            LightningAttack();
+        }
+        else
+        {
+            //anim.SetBool("LightningAttack", false);
+        }
+    }
     void LightningAttack()
     {
         Debug.Log("Casting Lightning Attack");
 
-        RaycastHit2D hit = Physics2D.Raycast(LighningAttackPoint.position, Vector2.right, lightningRange, playerLayerMask);
+        RaycastHit2D hit = Physics2D.Raycast(LightningAttackPoint.position, Vector2.right, lightningRange, playerLayerMask);
         if(hit.collider != null)
         {
             anim.SetTrigger("LightningAttack");
-            if(audioSource != null)
+            if (audioSource != null)
             {
                 audioSource.Play();
             }
@@ -165,7 +181,7 @@ public class Boss : MonoBehaviour
         Gizmos.DrawRay(magicFireAttackPoint.position, direction * magicFireRange);
 
         Gizmos.color = Color.green;
-        Gizmos.DrawRay(LighningAttackPoint.position, direction * lightningRange);
+        Gizmos.DrawRay(LightningAttackPoint.position, direction * lightningRange);
     }
 }
 
