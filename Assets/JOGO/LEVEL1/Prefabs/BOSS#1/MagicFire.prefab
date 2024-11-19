@@ -29,13 +29,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 701756280903493198}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 43.81, y: 3.85, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &701756280903493196
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -183,9 +183,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ca821419f2f03e40ab7f70fc7eb8113, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
-  damage: 20
   lifetime: 5
-  playerLayerMask:
+  destroyOnHit: 1
+  collisionLayers:
     serializedVersion: 2
     m_Bits: 64
+  hitEffectPrefab: {fileID: 6387028924451042002, guid: 29107cc512f6a6349b6c2f40e1151b7d, type: 3}
+  trailEffectPrefab: {fileID: 0}
+  rotateTowardsDirection: 1
+  explosionRadius: 0
+  canDamageEnemy: 0

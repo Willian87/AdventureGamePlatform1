@@ -45,7 +45,7 @@ public class BossDamage : MonoBehaviour
             healthBar.SetHealth(currentHealth);
         }
 
-        anim.SetBool("isHurting", true);
+        anim.SetTrigger("Hit");
 
         if (currentHealth <= 0)
         {
@@ -62,7 +62,7 @@ public class BossDamage : MonoBehaviour
 
         rb.gravityScale = 0;
 
-        anim.SetBool("isDead", true);
+        anim.SetTrigger("Die");
 
         // Disable health display
         if (healthCanvas != null)
@@ -79,7 +79,7 @@ public class BossDamage : MonoBehaviour
         }
 
         this.GetComponent<Boss>().enabled = false;
-        this.GetComponent<BossPatrol>().enabled = false;
+        this.GetComponent<BossBehavior>().enabled = false;
 
 
         yield return new WaitForSeconds(enemyOut);

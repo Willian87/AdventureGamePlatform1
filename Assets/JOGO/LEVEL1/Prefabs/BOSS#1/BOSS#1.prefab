@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 759901887987049106}
   - component: {fileID: 6083574472770831180}
   - component: {fileID: 5338470113584463363}
-  - component: {fileID: 1553170169676210352}
+  - component: {fileID: 1149080196988145228}
   m_Layer: 11
   m_Name: BOSS#1
   m_TagString: Untagged
@@ -234,7 +234,7 @@ MonoBehaviour:
   maxHealth: 100
   currentHealth: 0
   enemyOut: 2
---- !u!114 &1553170169676210352
+--- !u!114 &1149080196988145228
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -243,25 +243,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 507199877982740023}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fbf043ff536747d4a8a9f64ca2732b5a, type: 3}
+  m_Script: {fileID: 11500000, guid: b22fe51eb7d0ae64286fee573223af0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackPoint: {fileID: 8403739509523907084}
-  magicFireAttackPoint: {fileID: 8924295428435861573}
-  LighningAttackPoint: {fileID: 6033831152001125220}
-  attackRange: 1
-  magicFireRange: 1
-  lightningRange: 1.61
-  playerLayerMask:
-    serializedVersion: 2
-    m_Bits: 64
-  player: {fileID: 0}
-  attackCooldown: 2
-  magicFireCooldown: 5
-  LightningCooldown: 8
-  baseDamage: 5
-  criticalDamage: 20
-  criticalChance: 0.2
+  maxHealth: 100
+  phase2Threshold: 0.7
+  phase3Threshold: 0.3
+  meleeRange: 2
+  minimumFireRange: 3
+  baseTimeBetweenAttacks: 3
+  warningDuration: 1.5
+  attackDuration: 1
+  meleeDamage: 20
+  meleeHitbox: {fileID: 0}
+  fireballPrefab: {fileID: 701756280903493198, guid: 59edcc9ccce46e44b8522647551dc228, type: 3}
+  firePoint: {fileID: 8924295428435861573}
+  fireballSpeed: 8
+  fireballDamage: 15
+  lightningPrefab: {fileID: 0}
+  lightningDamage: 25
+  lightningWidth: 3
 --- !u!1 &2800312056034186032
 GameObject:
   m_ObjectHideFlags: 0
@@ -349,7 +350,7 @@ Transform:
   m_GameObject: {fileID: 7111438972525161586}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.63, y: -0.391, z: 0}
+  m_LocalPosition: {x: 1.067, y: -0.226, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -411,7 +412,7 @@ Transform:
   m_GameObject: {fileID: 8969087285882835469}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.62, y: -0.31, z: 0}
+  m_LocalPosition: {x: 0.95, y: -0.22, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
