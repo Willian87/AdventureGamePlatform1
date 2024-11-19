@@ -5,6 +5,8 @@ public class BossBehavior : MonoBehaviour
 {
     [Header("Health Settings")]
     [SerializeField] private int maxHealth = 1000;
+    [SerializeField] private int currentHealth;
+    [SerializeField] private float enemyOut;
     [SerializeField] private float phase2Threshold = 0.7f; // 70% health
     [SerializeField] private float phase3Threshold = 0.3f; // 30% health
 
@@ -38,11 +40,12 @@ public class BossBehavior : MonoBehaviour
     private enum AttackType { Melee, Fire, Lightning }
 
     private BossPhase currentPhase;
-    private int currentHealth;
     private bool isAttacking;
     private Animator animator;
     private Transform player;
     private SpriteRenderer spriteRenderer;
+    private Rigidbody2D rb;
+    private Canvas healthCanvas;
     private bool isFacingRight;
 
     private void Start()
@@ -50,6 +53,8 @@ public class BossBehavior : MonoBehaviour
         currentHealth = maxHealth;
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        rb = GetComponent<Rigidbody2D>();
+        healthCanvas = GetComponent<Canvas>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
         currentPhase = BossPhase.Phase1;
         isFacingRight = faceRight;
@@ -128,27 +133,75 @@ public class BossBehavior : MonoBehaviour
 
     private AttackType ChooseAttackByPhase()
     {
+        float distanceToPlayer = Vector2.Distance(transform.position, player.position);
+
         switch (currentPhase)
         {
             case BossPhase.Phase1:
                 // Phase 1: Only melee and fire attacks
-                return Random.value < 0.7f ? AttackType.Melee : AttackType.Fire;
+                if (distanceToPlayer <= meleeRange)
+                {
+                    // Player is within melee range, always use melee attack
+                    return AttackType.Melee;
+                }
+                else
+                {
+                    return Random.value < 0.7f ? AttackType.Melee : AttackType.Fire;
+                }
 
             case BossPhase.Phase2:
                 // Phase 2: All attacks, but lightning is rare
-                float rand = Random.value;
-                if (rand < 0.4f) return AttackType.Melee;
-                else if (rand < 0.8f) return AttackType.Fire;
-                else return AttackType.Lightning;
+                if (distanceToPlayer <= meleeRange)
+                {
+                    return AttackType.Melee;
+                }
+                else
+                {
+                    float rand = Random.value;
+                    if (rand < 0.4f) return AttackType.Melee;
+                    else if (rand < 0.8f) return AttackType.Fire;
+                    else return AttackType.Lightning;
+                }
 
             case BossPhase.Phase3:
                 // Phase 3: All attacks with equal probability
-                return (AttackType)Random.Range(0, 3);
+                if (distanceToPlayer <= meleeRange)
+                {
+                    return AttackType.Melee;
+                }
+                else
+                {
+                    return (AttackType)Random.Range(0, 3);
+                }
 
             default:
                 return AttackType.Melee;
         }
     }
+
+    //private AttackType ChooseAttackByPhase()
+    //{
+    //    switch (currentPhase)
+    //    {
+    //        case BossPhase.Phase1:
+    //            // Phase 1: Only melee and fire attacks
+    //            return Random.value < 0.7f ? AttackType.Melee : AttackType.Fire;
+
+    //        case BossPhase.Phase2:
+    //            // Phase 2: All attacks, but lightning is rare
+    //            float rand = Random.value;
+    //            if (rand < 0.4f) return AttackType.Melee;
+    //            else if (rand < 0.8f) return AttackType.Fire;
+    //            else return AttackType.Lightning;
+
+    //        case BossPhase.Phase3:
+    //            // Phase 3: All attacks with equal probability
+    //            return (AttackType)Random.Range(0, 3);
+
+    //        default:
+    //            return AttackType.Melee;
+    //    }
+    //}
 
     private float CalculateWaitTime()
     {
@@ -275,7 +328,7 @@ public class BossBehavior : MonoBehaviour
 
         if (currentHealth <= 0)
         {
-            Die();
+            StartCoroutine(Die()) ;
         }
     }
 
@@ -295,22 +348,51 @@ public class BossBehavior : MonoBehaviour
                 break;
         }
     }
-
-    private void Die()
+    IEnumerator Die()
     {
-        // Stop all attacks
-        StopAllCoroutines();
+        // Perform death actions
+        //StopAllCoroutines();
+        rb.gravityScale = 0;
 
-        // Play death animation
         animator.SetTrigger("Die");
 
-        // Disable components
-        GetComponent<Collider2D>().enabled = false;
-        this.enabled = false;
+        // Disable health display
+        if (healthCanvas != null)
+        {
+            healthCanvas.enabled = false;
+        }
 
-        // You can add death effects, drop items, etc. here
-        Destroy(gameObject, 2f);
+        // Disable collider and script
+        Collider2D[] colliders = GetComponents<Collider2D>();
+
+        foreach (Collider2D collider in colliders)
+        {
+            collider.enabled = false;
+        }
+
+        //this.GetComponent<Boss>().enabled = false;
+        this.GetComponent<BossBehavior>().enabled = false;
+
+
+        yield return new WaitForSeconds(enemyOut);
+        Debug.Log("No sumi pq?");
+        this.gameObject.SetActive(false);
     }
+    //private void Die()
+    //{
+    //    // Stop all attacks
+    //    StopAllCoroutines();
+    //    rb.gravityScale = 0;
+    //    // Play death animation
+    //    animator.SetTrigger("Die");
+
+    //    // Disable components
+    //    GetComponent<Collider2D>().enabled = false;
+    //    this.enabled = false;
+
+    //    // You can add death effects, drop items, etc. here
+    //    Destroy(gameObject, 2f);
+    //}
 
     // Visualize attack ranges in editor
     private void OnDrawGizmosSelected()

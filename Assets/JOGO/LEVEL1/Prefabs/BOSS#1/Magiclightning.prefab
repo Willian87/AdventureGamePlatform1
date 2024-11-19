@@ -193,9 +193,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ca821419f2f03e40ab7f70fc7eb8113, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
-  damage: 20
   lifetime: 5
-  playerLayerMask:
+  destroyOnHit: 1
+  collisionLayers:
     serializedVersion: 2
     m_Bits: 64
+  hitEffectPrefab: {fileID: 0}
+  trailEffectPrefab: {fileID: 0}
+  rotateTowardsDirection: 1
+  explosionRadius: 0
+  canDamageEnemy: 0
