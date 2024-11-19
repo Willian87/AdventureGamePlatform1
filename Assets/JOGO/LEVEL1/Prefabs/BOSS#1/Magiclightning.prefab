@@ -197,7 +197,7 @@ MonoBehaviour:
   destroyOnHit: 1
   collisionLayers:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 0
   hitEffectPrefab: {fileID: 0}
   trailEffectPrefab: {fileID: 0}
   rotateTowardsDirection: 1
