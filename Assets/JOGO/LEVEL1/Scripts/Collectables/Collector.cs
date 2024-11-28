@@ -106,13 +106,17 @@ public class Collector : MonoBehaviour
 
     private void CheckCoinCountForHealthIncrease()
     {
-        if (coinCount >= coinsNeededForHealthIncrease)
+        if(playerCombat.currentHealth < playerCombat.maxHealth)
         {
-            int healthIncreaseAmount = FindObjectOfType<Coins>().healthIncrease;
-            playerCombat.IncreaseHealth(healthIncreaseAmount);
-            coinCount = 0; // Reset coin count after increasing health
-            OnCoinCountReset?.Invoke();
+            if (coinCount >= coinsNeededForHealthIncrease)
+            {
+                int healthIncreaseAmount = FindObjectOfType<Coins>().healthIncrease;
+                playerCombat.IncreaseHealth(healthIncreaseAmount);
+                coinCount = 0; // Reset coin count after increasing health
+                OnCoinCountReset?.Invoke();
+            }
         }
+        
     }
 
     private void AppleCountForHealthIncrease()
