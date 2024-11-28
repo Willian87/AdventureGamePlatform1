@@ -7,7 +7,9 @@ public class PlayerCombat : MonoBehaviour
 {
     public static PlayerCombat instance;
 
-    public static event Action OnPlayerRespawn; 
+    public static event Action OnPlayerRespawn;
+
+    Collector collector;
 
     private GameController GC;
     private Rigidbody2D rb;
@@ -30,7 +32,7 @@ public class PlayerCombat : MonoBehaviour
     private bool canAttack = true;
     [SerializeField] [Range(0f, 1f)] private float healthRestorePercentage = 0.3f; // Set this in the Inspector (default 30%)
 
-    
+
 
     [Header("Audio")]
     [SerializeField] private AudioClip attackSound;
@@ -113,14 +115,19 @@ public class PlayerCombat : MonoBehaviour
         currentHealth -= damage;
 
         pHealthBar.SetHealth(currentHealth);
+
+      
         if (currentHealth > 0)
         {
             anim.SetTrigger("isHurting");
         }
         if (currentHealth <= 0)
         {
+            
             OnDeath();
+
         }
+
     }
 
     private IEnumerator ResetPlayerState()
@@ -137,7 +144,7 @@ public class PlayerCombat : MonoBehaviour
         OnPlayerRespawn?.Invoke(); // Notify other scripts that the player has respawned
 
         // Restore a percentage of the player's health before death
-        int healthToRestore = Mathf.RoundToInt(healthBeforeDeath * healthRestorePercentage);
+        int healthToRestore = Mathf.RoundToInt(maxHealth * healthRestorePercentage);
         currentHealth = healthToRestore;
 
         // Move the player to the last checkpoint position
@@ -162,27 +169,48 @@ public class PlayerCombat : MonoBehaviour
 
     private void OnDeath()
     {
-        // Store the current health before death so it can be partially restored
-        healthBeforeDeath = maxHealth;
-
-        // Stop all movement by setting the velocity to zero
-        rb.velocity = Vector3.zero;
-
-        // Disable gravity to prevent further movement or falling
+        rb.velocity = Vector2.zero; // Stop movement
         rb.gravityScale = 0f;
-
-        // Play death animation
         anim.SetBool("isDead", true);
 
-        // Disable player controls and collision
         GetComponent<PlayerController>().enabled = false;
         GetComponent<Collider2D>().enabled = false;
-
-        // Disable this script to stop further actions
         this.enabled = false;
 
-        // Start coroutine to handle respawn and reset player state
-        StartCoroutine(ResetPlayerState());
+        FindObjectOfType<Collector>().DecreaseHeartCount(); // Decrease life count
+
+        if (FindObjectOfType<Collector>().GetHeartCount() > 0) // Check if lives remain
+        {
+            StartCoroutine(ResetPlayerState());
+        }
+        else
+        {
+            // If no lives remain, don't reset, show Game Over instead
+            Debug.Log("Out of lives. Game Over!");
+        }
+        //// Store the current health before death so it can be partially restored
+        //healthBeforeDeath = maxHealth;
+
+        //// Stop all movement by setting the velocity to zero
+        //rb.velocity = Vector3.zero;
+
+        //// Disable gravity to prevent further movement or falling
+        //rb.gravityScale = 0f;
+
+        //// Play death animation
+        //anim.SetBool("isDead", true);
+
+        //// Disable player controls and collision
+        //GetComponent<PlayerController>().enabled = false;
+        //GetComponent<Collider2D>().enabled = false;
+
+        //// Disable this script to stop further actions
+        //this.enabled = false;
+
+
+
+        //// Start coroutine to handle respawn and reset player state
+        //StartCoroutine(ResetPlayerState());
     }
 
     public void IncreaseHealth(int amount)

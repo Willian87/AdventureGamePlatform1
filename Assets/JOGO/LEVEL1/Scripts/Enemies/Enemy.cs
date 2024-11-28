@@ -33,6 +33,11 @@ public class Enemy : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         player = FindObjectOfType<PlayerCombat>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+
+        if (player == null)
+        {
+            Debug.LogError("No PlayerCombat found in the scene!");
+        }
     }
 
     void Update()
