@@ -11,16 +11,29 @@ public class CoinUI : MonoBehaviour
     private void OnEnable()
     {
         Coins.OnCoinCollected += IncrementCoinCount;
+        Collector.OnCoinCountReset += ResetCoinCount;
     }
 
     private void OnDisable()
     {
-        
+        Coins.OnCoinCollected -= IncrementCoinCount;
+        Collector.OnCoinCountReset -= ResetCoinCount;
     }
 
     private void IncrementCoinCount()
     {
         coinCount++;
+        coinText.text = $" x {coinCount}";
+    }
+
+    private void ResetCoinCount()
+    {
+        coinCount = 0; // Reset the coin count
+        UpdateCoinUI();
+    }
+
+    private void UpdateCoinUI()
+    {
         coinText.text = $" x {coinCount}";
     }
 }

@@ -63,7 +63,7 @@
 //        }
 //    }
 //}
-
+using System;
 using UnityEngine;
 
 public class Collector : MonoBehaviour
@@ -71,6 +71,8 @@ public class Collector : MonoBehaviour
     private int coinCount = 0;
     private int coinsNeededForHealthIncrease = 5; // Number of coins needed to increase health
     private int heartCount = 3; // Initial number of lives (hearts)
+
+    public static event Action OnCoinCountReset;
 
     private PlayerCombat playerCombat;
 
@@ -95,6 +97,10 @@ public class Collector : MonoBehaviour
             {
                 IncrementHeartCount();
             }
+            else if(collectables is Apple)
+            {
+                AppleCountForHealthIncrease();
+            }
         }
     }
 
@@ -105,7 +111,17 @@ public class Collector : MonoBehaviour
             int healthIncreaseAmount = FindObjectOfType<Coins>().healthIncrease;
             playerCombat.IncreaseHealth(healthIncreaseAmount);
             coinCount = 0; // Reset coin count after increasing health
+            OnCoinCountReset?.Invoke();
         }
+    }
+
+    private void AppleCountForHealthIncrease()
+    {
+       
+            int healthIncreaseAmount = FindObjectOfType<Apple>().healthIncrease;
+            playerCombat.IncreaseHealth(healthIncreaseAmount);
+            coinCount = 0; // Reset coin count after increasing health
+        
     }
 
     private void IncrementHeartCount()

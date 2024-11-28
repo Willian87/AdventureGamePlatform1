@@ -5,7 +5,8 @@ using System;
 
 public class Apple : MonoBehaviour, CollectableItems
 {
-    public static event Action OnAppleCollected; 
+    public static event Action OnAppleCollected;
+    public int healthIncrease = 20; // Amount of health to increase after a set number of Apples
 
     public void Collector()
     {
