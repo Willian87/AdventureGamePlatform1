@@ -63,7 +63,8 @@ public class BossDamage : MonoBehaviour
         rb.gravityScale = 0;
 
         anim.SetTrigger("Die");
-
+        this.GetComponent<Boss>().enabled = false;
+        this.GetComponent<BossBehavior>().enabled = false;
         // Disable health display
         if (healthCanvas != null)
         {
@@ -78,8 +79,7 @@ public class BossDamage : MonoBehaviour
             collider.enabled = false;
         }
 
-        this.GetComponent<Boss>().enabled = false;
-        this.GetComponent<BossBehavior>().enabled = false;
+        
 
 
         yield return new WaitForSeconds(enemyOut);

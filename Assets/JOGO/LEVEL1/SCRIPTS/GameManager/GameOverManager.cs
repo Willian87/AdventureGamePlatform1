@@ -39,7 +39,7 @@ public class GameOverManager : MonoBehaviour
         Time.timeScale = 1f;
 
         // Load the main menu or quit the application
-        SceneManager.LoadScene("MainMenu"); // Replace "MainMenu" with your menu scene name
+        SceneManager.LoadScene("Menu"); // Replace "MainMenu" with your menu scene name
         // Alternatively, Application.Quit() can be used for standalone builds
     }
 }
