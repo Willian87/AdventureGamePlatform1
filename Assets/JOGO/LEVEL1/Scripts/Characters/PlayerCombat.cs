@@ -20,7 +20,7 @@ public class PlayerCombat : MonoBehaviour
     public PlayerHealthBar pHealthBar;
     public int maxHealth = 100;
     public int currentHealth;
-    private int healthBeforeDeath; // Store player's health before death
+    //private int healthBeforeDeath; // Store player's health before death
     bool isInvulnerable = false;
 
     [Header("Combat Settings")]

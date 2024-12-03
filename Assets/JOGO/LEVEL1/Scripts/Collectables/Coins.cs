@@ -26,6 +26,8 @@ public class Coins : MonoBehaviour, CollectableItems
 {
     public static event Action OnCoinCollected;
 
+    
+
     public int healthIncrease = 20; // Amount of health to increase after a set number of coins
 
     public void Collector()

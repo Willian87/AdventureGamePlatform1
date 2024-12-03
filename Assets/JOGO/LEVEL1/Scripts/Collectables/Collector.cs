@@ -64,13 +64,17 @@
 //    }
 //}
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class Collector : MonoBehaviour
 {
     private int coinCount = 0;
-    private int coinsNeededForHealthIncrease = 5; // Number of coins needed to increase health
+    private int coinsNeededForHealthIncrease = 15; // Number of coins needed to increase health
     private int heartCount = 3; // Initial number of lives (hearts)
+
+    [SerializeField] private GameOverManager gameOverManager;
+    [SerializeField] private float gameOverCount;
 
     public static event Action OnCoinCountReset;
 
@@ -141,7 +145,7 @@ public class Collector : MonoBehaviour
 
         if (heartCount <= 0)
         {
-            GameOver();
+            StartCoroutine(GameOver());
         }
     }
 
@@ -155,10 +159,18 @@ public class Collector : MonoBehaviour
         FindObjectOfType<HeartUI>().SetHeartCount(heartCount);
     }
 
-    private void GameOver()
+    //private void GameOver()
+    //{
+    //    Debug.Log("Game Over!");
+    //    // Add game-over handling logic here (e.g., show game-over screen, stop gameplay)
+        
+    //    StartCoroutine(GameOver());
+    //}
+
+    private IEnumerator GameOver()
     {
-        Debug.Log("Game Over!");
-        // Add game-over handling logic here (e.g., show game-over screen, stop gameplay)
+        yield return new WaitForSeconds(gameOverCount);
+        gameOverManager.TriggerGameOver();
     }
 }
 
