@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class PauseMenu : MonoBehaviour
+public class PauseScreen : MonoBehaviour
 {
     public GameObject pauseMenuUI;  // Reference to the Pause Menu UI
     private bool isPaused = false;  // Track if the game is paused
@@ -20,10 +20,12 @@ public class PauseMenu : MonoBehaviour
             if (isPaused)
             {
                 ResumeGame();
+                AudioListener.pause = false;
             }
             else
             {
                 PauseGame();
+                AudioListener.pause = true;
             }
         }
     }
@@ -34,6 +36,8 @@ public class PauseMenu : MonoBehaviour
         isPaused = true;
         pauseMenuUI.SetActive(true);  // Show the pause menu
         Time.timeScale = 0f;  // Stop the game time (freeze gameplay)
+        
+
     }
 
     // Resume the game and hide the pause menu
@@ -42,6 +46,8 @@ public class PauseMenu : MonoBehaviour
         isPaused = false;
         pauseMenuUI.SetActive(false);  // Hide the pause menu
         Time.timeScale = 1f;  // Resume the game time
+        
+
     }
 
     // Restart the current level/scene
