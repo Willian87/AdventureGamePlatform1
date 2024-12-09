@@ -259,7 +259,7 @@ MonoBehaviour:
   player: {fileID: 0}
   attackCooldown: 2
   baseDamage: 20
-  criticalDamage: 40
+  criticalDamage: 20
   criticalChance: 0.2
 --- !u!114 &7037798078652154190
 MonoBehaviour:
