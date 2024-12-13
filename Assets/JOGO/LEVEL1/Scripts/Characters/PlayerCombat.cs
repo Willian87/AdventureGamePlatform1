@@ -57,7 +57,8 @@ public class PlayerCombat : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
-        audioSource = GetComponent<AudioSource>();
+        audioSource = GetComponentInChildren<AudioSource>();
+        attackSound = GetComponent<AudioClip>();
 
         currentHealth = maxHealth;
         pHealthBar.SetHealth(maxHealth);
@@ -93,17 +94,26 @@ public class PlayerCombat : MonoBehaviour
         }
 
         OnPlayerAttack?.Invoke();
-
-        if (attackSound != null && audioSource != null)
-        {
-            audioSource.PlayOneShot(attackSound);
-        }
+        PlaySound(attackSound);
 
         yield return new WaitForSeconds(attackCooldown);
 
         canAttack = true;
         anim.SetBool("isAttacking", false);
     }
+
+    private void PlaySound(AudioClip clip)
+    {
+        if (clip != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(clip);
+        }
+        else
+        {
+            Debug.LogError("Missing AudioClip or AudioSource!");
+        }
+    }
+
 
     public void TakingDamage(int damage)
     {
