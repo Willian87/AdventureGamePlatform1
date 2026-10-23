@@ -1,27 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerRespawnPoint : MonoBehaviour
 {
-    private Transform playerRP;
-
-
-
-    // Start is called before the first frame update
-    void Awake()
+    private void Start()
     {
-        playerRP = GameObject.FindGameObjectWithTag("Player").transform;
-
-        if(playerRP != null)
-        {
-            playerRP.position = transform.position;
-        }
-        else
-        {
-            Debug.Log("Obejct Not found!");
-        }
+        // Awake ran before all scene objects existed; Start can find the surviving player.
+        PlayerCombat player = PlayerCombat.instance;
+        if (GameController.instance != null)
+            GameController.instance.lastCheckPoint = transform.position;
+        if (player != null)
+            player.transform.position = transform.position;
     }
-
-    
 }

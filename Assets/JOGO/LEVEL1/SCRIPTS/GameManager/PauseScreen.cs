@@ -6,6 +6,21 @@ public class PauseScreen : MonoBehaviour
     public GameObject pauseMenuUI;  // Reference to the Pause Menu UI
     private bool isPaused = false;  // Track if the game is paused
 
+    private void Awake()
+    {
+        SceneManager.sceneLoaded += ResetForScene;
+    }
+
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= ResetForScene;
+    }
+
+    private void ResetForScene(UnityEngine.SceneManagement.Scene scene, LoadSceneMode mode)
+    {
+        ResumeGame();
+    }
+
     private void Start()
     {
         // Make sure the pause menu is initially inactive
@@ -20,12 +35,12 @@ public class PauseScreen : MonoBehaviour
             if (isPaused)
             {
                 ResumeGame();
-                AudioListener.pause = false;
+
             }
             else
             {
                 PauseGame();
-                AudioListener.pause = true;
+
             }
         }
     }
@@ -34,6 +49,7 @@ public class PauseScreen : MonoBehaviour
     public void PauseGame()
     {
         isPaused = true;
+        AudioListener.pause = true;
         pauseMenuUI.SetActive(true);  // Show the pause menu
         Time.timeScale = 0f;  // Stop the game time (freeze gameplay)
         
@@ -44,6 +60,7 @@ public class PauseScreen : MonoBehaviour
     public void ResumeGame()
     {
         isPaused = false;
+        AudioListener.pause = false;
         pauseMenuUI.SetActive(false);  // Hide the pause menu
         Time.timeScale = 1f;  // Resume the game time
         
@@ -53,7 +70,7 @@ public class PauseScreen : MonoBehaviour
     // Restart the current level/scene
     public void RestartGame()
     {
-        Time.timeScale = 1f;  // Ensure the game time is running
+        ResumeGame();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);  // Reload the current scene
     }
 
@@ -64,5 +81,3 @@ public class PauseScreen : MonoBehaviour
         Application.Quit();  // Quit the application (works in a build, not the editor)
     }
 }
-
-

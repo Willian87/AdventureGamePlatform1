@@ -10,7 +10,7 @@ public class LoadPreviousScene : MonoBehaviour
     {
         if(collision.gameObject.layer == 6)
         {
-            SceneTransition.instance.LoadNextScene();
+            SceneTransition.instance.LoadPreviousScene();
         }
     }
 }

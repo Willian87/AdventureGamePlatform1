@@ -22,6 +22,9 @@ public class PlayerCombat : MonoBehaviour
     public int currentHealth;
     //private int healthBeforeDeath; // Store player's health before death
     bool isInvulnerable = false;
+    private bool isDead;
+    private float defaultGravity;
+    private Color defaultColor;
 
     [Header("Combat Settings")]
     [SerializeField] private Transform attackPoint;
@@ -46,6 +49,7 @@ public class PlayerCombat : MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(this.gameObject);
+            SceneManager.sceneLoaded += OnSceneLoaded;
         }
         else
         {
@@ -58,17 +62,21 @@ public class PlayerCombat : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         audioSource = GetComponentInChildren<AudioSource>();
-        attackSound = GetComponent<AudioClip>();
+        defaultGravity = rb.gravityScale;
+        defaultColor = GetComponent<SpriteRenderer>().color;
 
         currentHealth = maxHealth;
-        pHealthBar.SetHealth(maxHealth);
+        PersistentGameplayUI.PreserveHUD();
+        BindSceneReferences();
 
         GC = FindObjectOfType<GameController>();
-        transform.position = GC.lastCheckPoint;
+        if (GC != null) transform.position = GC.lastCheckPoint;
     }
 
     void Update()
     {
+        if (Time.timeScale == 0f || isDead) return;
+
         if (Input.GetKeyDown(KeyCode.E) && canAttack)
         {
             StartCoroutine(Attack());
@@ -117,14 +125,14 @@ public class PlayerCombat : MonoBehaviour
 
     public void TakingDamage(int damage)
     {
-        if (isInvulnerable)
+        if (isInvulnerable || isDead)
         {
             return; // Don't take damage if the player is invulnerable
         }
 
-        currentHealth -= damage;
+        currentHealth = Mathf.Max(0, currentHealth - damage);
 
-        pHealthBar.SetHealth(currentHealth);
+        if (pHealthBar != null) pHealthBar.SetHealth(currentHealth);
 
       
         if (currentHealth > 0)
@@ -148,20 +156,20 @@ public class PlayerCombat : MonoBehaviour
 
         // Reset animation and physics properties
         anim.SetBool("isDead", false);
-        rb.gravityScale = 1f;
+        rb.gravityScale = defaultGravity;
         GetComponent<Collider2D>().enabled = true;
 
         OnPlayerRespawn?.Invoke(); // Notify other scripts that the player has respawned
 
         // Restore a percentage of the player's health before death
-        int healthToRestore = Mathf.RoundToInt(maxHealth * healthRestorePercentage);
+        int healthToRestore = Mathf.Max(1, Mathf.RoundToInt(maxHealth * healthRestorePercentage));
         currentHealth = healthToRestore;
 
         // Move the player to the last checkpoint position
-        transform.position = GC.lastCheckPoint;
+        if (GC != null) transform.position = GC.lastCheckPoint;
 
         // Update the health bar without resetting currentHealth to maxHealth
-        pHealthBar.SetHealth(currentHealth);
+        if (pHealthBar != null) pHealthBar.SetHealth(currentHealth);
 
         // Brief delay before re-enabling the player controls
         yield return new WaitForSeconds(0.5f);
@@ -169,6 +177,7 @@ public class PlayerCombat : MonoBehaviour
         // Re-enable player controls and the script
         GetComponent<PlayerController>().enabled = true;
         this.enabled = true;
+        isDead = false;
 
         // Optionally add an invulnerability period here to prevent instant death on respawn
         StartCoroutine(TemporaryInvulnerability());
@@ -179,6 +188,11 @@ public class PlayerCombat : MonoBehaviour
 
     private void OnDeath()
     {
+        if (isDead) return;
+        isDead = true;
+        StopAllCoroutines();
+        canAttack = true;
+        anim.SetBool("isAttacking", false);
         rb.velocity = Vector2.zero; // Stop movement
         rb.gravityScale = 0f;
         anim.SetBool("isDead", true);
@@ -187,9 +201,9 @@ public class PlayerCombat : MonoBehaviour
         GetComponent<Collider2D>().enabled = false;
         this.enabled = false;
 
-        FindObjectOfType<Collector>().DecreaseHeartCount(); // Decrease life count
+        collector.DecreaseHeartCount(); // Decrease life count
 
-        if (FindObjectOfType<Collector>().GetHeartCount() > 0) // Check if lives remain
+        if (collector.GetHeartCount() > 0) // Check if lives remain
         {
             StartCoroutine(ResetPlayerState());
         }
@@ -226,7 +240,7 @@ public class PlayerCombat : MonoBehaviour
     public void IncreaseHealth(int amount)
     {
         currentHealth = Mathf.Min(currentHealth + amount, maxHealth);
-        pHealthBar.SetHealth(currentHealth);
+        if (pHealthBar != null) pHealthBar.SetHealth(currentHealth);
         Debug.Log("Health increased by " + amount);
     }
 
@@ -260,6 +274,67 @@ public class PlayerCombat : MonoBehaviour
 
         // Ensure player returns to original color after invulnerability
         playerSprite.color = originalColor;
+    }
+
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+        if (instance == this) instance = null;
+    }
+
+    private void BindSceneReferences()
+    {
+        GC = GameController.instance;
+        collector = GetComponent<Collector>();
+        pHealthBar = PersistentGameplayUI.FindHUD<PlayerHealthBar>();
+        if (pHealthBar != null)
+        {
+            pHealthBar.SetMaxValue(maxHealth);
+            pHealthBar.SetHealth(currentHealth);
+        }
+    }
+
+    private string lastLevelName;
+
+    private void OnSceneLoaded(UnityEngine.SceneManagement.Scene scene, LoadSceneMode mode)
+    {
+        if (instance != this) return;
+        bool reloadingLevel = lastLevelName == scene.name;
+        bool gameplay = scene.name.StartsWith("Level");
+        gameObject.SetActive(gameplay);
+        if (!gameplay)
+        {
+            lastLevelName = null;
+            return;
+        }
+        BindSceneReferences();
+        if (rb != null)
+        {
+            int health = reloadingLevel || lastLevelName == null ? maxHealth : currentHealth;
+            RestoreState(transform.position, health);
+            if ((reloadingLevel || lastLevelName == null) && collector != null) collector.ResetLives();
+        }
+        lastLevelName = scene.name;
+    }
+
+    public void RestoreState(Vector3 position, int health)
+    {
+        StopAllCoroutines();
+        isDead = false;
+        isInvulnerable = false;
+        canAttack = true;
+        currentHealth = Mathf.Clamp(health, 1, maxHealth);
+        transform.position = position;
+        rb.velocity = Vector2.zero;
+        rb.gravityScale = defaultGravity;
+        anim.SetBool("isDead", false);
+        anim.SetBool("isAttacking", false);
+        GetComponent<Collider2D>().enabled = true;
+        GetComponent<SpriteRenderer>().color = defaultColor;
+        GetComponent<PlayerController>().enabled = true;
+        enabled = true;
+        BindSceneReferences();
+        if (GC != null) GC.lastCheckPoint = position;
     }
 
     private void OnDrawGizmosSelected()

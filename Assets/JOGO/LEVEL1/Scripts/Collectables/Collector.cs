@@ -1,68 +1,3 @@
-//using System.Collections;
-//using System.Collections.Generic;
-//using UnityEngine;
-
-//public class Collector : MonoBehaviour
-//{
-//    private void OnTriggerEnter2D(Collider2D collision)
-//    {
-//        CollectableItems collectables = collision.GetComponent<CollectableItems>();
-//        if(collectables != null)
-//        {
-//            collectables.Collector();
-//        }
-//    }
-//}
-
-//using UnityEngine;
-
-//public class Collector : MonoBehaviour
-//{
-//    private int coinCount = 0;
-//    private int coinsNeededForHealthIncrease = 5; // Number of coins needed to increase health
-//    private int heartCount = 0;
-//    private int heartsNeededForHealthIncrease = 1;
-
-//    private PlayerCombat playerCombat;
-
-//    private void Start()
-//    {
-//        playerCombat = FindObjectOfType<PlayerCombat>();
-//    }
-
-//    private void OnTriggerEnter2D(Collider2D collision)
-//    {
-//        CollectableItems collectables = collision.GetComponent<CollectableItems>();
-//        if (collectables != null)
-//        {
-//            collectables.Collector();
-//            coinCount++;
-//            heartCount++;
-//            CheckCoinCountForHealthIncrease();
-//            CheckHeartCountForHealthIncrease();
-//        }
-//    }
-
-//    private void CheckCoinCountForHealthIncrease()
-//    {
-//        if (coinCount >= coinsNeededForHealthIncrease)
-//        {
-//            int healthIncreaseAmount = FindObjectOfType<Coins>().healthIncrease;
-//            playerCombat.IncreaseHealth(healthIncreaseAmount);
-//            coinCount = 0; // Reset coin count after increasing health
-//        }
-//    }
-
-//    private void CheckHeartCountForHealthIncrease()
-//    {
-//        if(heartCount >= heartsNeededForHealthIncrease)
-//        {
-//            int healthIncreaseAmount = FindObjectOfType<Heart>().healthIncrease;
-//            playerCombat.IncreaseHealth(healthIncreaseAmount);
-//            heartCount = 0;
-//        }
-//    }
-//}
 using System;
 using System.Collections;
 using UnityEngine;
@@ -80,9 +15,36 @@ public class Collector : MonoBehaviour
 
     private PlayerCombat playerCombat;
 
+    private void Awake()
+    {
+        UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDestroy()
+    {
+        UnityEngine.SceneManagement.SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(UnityEngine.SceneManagement.Scene scene,
+        UnityEngine.SceneManagement.LoadSceneMode mode)
+    {
+        if (GetComponent<PlayerCombat>() != PlayerCombat.instance) return;
+        if (gameOverManager == null) gameOverManager = FindObjectOfType<GameOverManager>(true);
+        UpdateHeartUI();
+    }
+
+    public void ResetLives()
+    {
+        StopAllCoroutines();
+        heartCount = 3;
+        coinCount = 0;
+        OnCoinCountReset?.Invoke();
+        UpdateHeartUI();
+    }
+
     private void Start()
     {
-        playerCombat = FindObjectOfType<PlayerCombat>();
+        playerCombat = GetComponent<PlayerCombat>();
         UpdateHeartUI();
     }
 
@@ -95,7 +57,7 @@ public class Collector : MonoBehaviour
             if (collectables is Coins)
             {
                 coinCount++;
-                CheckCoinCountForHealthIncrease();
+                CheckCoinCountForHealthIncrease(((Coins)collectables).healthIncrease);
             }
             else if (collectables is Heart)
             {
@@ -103,32 +65,22 @@ public class Collector : MonoBehaviour
             }
             else if(collectables is Apple)
             {
-                AppleCountForHealthIncrease();
+                playerCombat.IncreaseHealth(((Apple)collectables).healthIncrease);
             }
         }
     }
 
-    private void CheckCoinCountForHealthIncrease()
+    private void CheckCoinCountForHealthIncrease(int healthIncreaseAmount)
     {
         if(playerCombat.currentHealth < playerCombat.maxHealth)
         {
             if (coinCount >= coinsNeededForHealthIncrease)
             {
-                int healthIncreaseAmount = FindObjectOfType<Coins>().healthIncrease;
                 playerCombat.IncreaseHealth(healthIncreaseAmount);
                 coinCount = 0; // Reset coin count after increasing health
                 OnCoinCountReset?.Invoke();
             }
         }
-        
-    }
-
-    private void AppleCountForHealthIncrease()
-    {
-       
-            int healthIncreaseAmount = FindObjectOfType<Apple>().healthIncrease;
-            playerCombat.IncreaseHealth(healthIncreaseAmount);
-            coinCount = 0; // Reset coin count after increasing health
         
     }
 
@@ -140,6 +92,7 @@ public class Collector : MonoBehaviour
 
     public void DecreaseHeartCount()
     {
+        if (heartCount <= 0) return;
         heartCount--;
         UpdateHeartUI();
 
@@ -156,7 +109,8 @@ public class Collector : MonoBehaviour
 
     private void UpdateHeartUI()
     {
-        FindObjectOfType<HeartUI>().SetHeartCount(heartCount);
+        HeartUI heartUI = PersistentGameplayUI.FindHUD<HeartUI>();
+        if (heartUI != null) heartUI.SetHeartCount(heartCount);
     }
 
     //private void GameOver()
@@ -173,6 +127,3 @@ public class Collector : MonoBehaviour
         gameOverManager.TriggerGameOver();
     }
 }
-
-
-

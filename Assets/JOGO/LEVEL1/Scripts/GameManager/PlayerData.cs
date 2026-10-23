@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 
@@ -10,7 +10,7 @@ public class PlayerData
     public string sceneToBeLoaded;
     public PlayerData(PlayerCombat player)
     {
-        //health = player.currentHealth;
+        health = player.currentHealth;
 
         position = new float[3];
         position[0] = player.transform.position.x;

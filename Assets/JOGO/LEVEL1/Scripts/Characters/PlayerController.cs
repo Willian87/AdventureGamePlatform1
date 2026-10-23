@@ -55,6 +55,7 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        if (Time.timeScale == 0f) return;
         HandleJump();
         HandleClimb();
         UpdateAnimations();

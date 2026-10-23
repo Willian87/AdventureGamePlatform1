@@ -8,6 +8,26 @@ public class GameOverManager : MonoBehaviour
 
     private bool isGameOver = false;
 
+    public GameObject GameOverScreen => gameOverScreen;
+
+    private void Awake()
+    {
+        SceneManager.sceneLoaded += ResetForScene;
+    }
+
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= ResetForScene;
+    }
+
+    private void ResetForScene(UnityEngine.SceneManagement.Scene scene, LoadSceneMode mode)
+    {
+        isGameOver = false;
+        if (gameOverScreen != null) gameOverScreen.SetActive(false);
+        AudioListener.pause = false;
+        Time.timeScale = 1f;
+    }
+
     // Method to trigger Game Over
     public void TriggerGameOver()
     {
@@ -16,7 +36,7 @@ public class GameOverManager : MonoBehaviour
         isGameOver = true;
 
         // Activate Game Over screen
-        gameOverScreen.SetActive(true);
+        if (gameOverScreen != null) gameOverScreen.SetActive(true);
 
         // Pause the game
         Time.timeScale = 0f;
@@ -26,6 +46,7 @@ public class GameOverManager : MonoBehaviour
     public void RetryGame()
     {
         // Unpause the game
+        AudioListener.pause = false;
         Time.timeScale = 1f;
 
         // Reload the current scene
@@ -36,6 +57,7 @@ public class GameOverManager : MonoBehaviour
     public void QuitGame()
     {
         // Unpause the game (optional for returning to menu)
+        AudioListener.pause = false;
         Time.timeScale = 1f;
 
         // Load the main menu or quit the application

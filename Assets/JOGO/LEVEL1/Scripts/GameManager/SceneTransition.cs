@@ -208,25 +208,6 @@ public class SceneTransition : MonoBehaviour
     // Coroutine to load a saved game scene
     private IEnumerator LoadSavedGameScene(PlayerData data)
     {
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(data.sceneToBeLoaded);
-
-        // Optional: Add a loading screen or progress bar here
-
-        while (!asyncLoad.isDone)
-        {
-            yield return null;
-        }
-
-        // Ensure GameManager is properly initialized
-        GameManager gameManager = FindObjectOfType<GameManager>();
-        if (gameManager != null)
-        {
-            gameManager.LoadGame();
-        }
-        else
-        {
-            Debug.LogError("GameManager not found in the scene.");
-        }
+        yield return GameManager.RestoreSavedGame(data);
     }
 }
-
